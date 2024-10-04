@@ -33,7 +33,7 @@ namespace LudumDare56.Player
 
             Cursor.lockState = CursorLockMode.Locked;
 
-            _attackLayer = LayerMask.GetMask("Map");
+            _attackLayer = LayerMask.GetMask("Map", "Monster");
 
             _cam = Camera.main;
         }
@@ -101,7 +101,10 @@ namespace LudumDare56.Player
             {
                 if (Physics.Raycast(_camHead.transform.position, _camHead.transform.forward, out var hit, 10f, _attackLayer))
                 {
-                    Debug.Log(hit.collider.name);
+                    if (hit.collider.CompareTag("Monster"))
+                    {
+                        hit.collider.transform.localScale -= Vector3.one * .2f;
+                    }
                 }
             }
         }
