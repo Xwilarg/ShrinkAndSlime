@@ -49,7 +49,7 @@ namespace LudumDare56.Player
 
             if (_isShooting && Physics.Raycast(_camHead.transform.position, _camHead.transform.forward, out var hit, 10f, _attackLayer) && hit.collider.CompareTag("Monster"))
             {
-                var size = Mathf.Clamp(hit.collider.transform.localScale.x - .5f * Time.deltaTime, .2f, 1f);
+                var size = Mathf.Clamp(hit.collider.transform.localScale.x - .5f * Time.deltaTime, .2f, hit.collider.transform.localScale.x);
                 hit.collider.transform.localScale = Vector3.one * size;
             }
 
