@@ -23,6 +23,8 @@ namespace LudumDare56.Player
 
         private Camera _cam;
 
+        private int _attackLayer;
+
         private bool CanMove => true;
 
         private void Awake()
@@ -30,6 +32,8 @@ namespace LudumDare56.Player
             _controller = GetComponent<CharacterController>();
 
             Cursor.lockState = CursorLockMode.Locked;
+
+            _attackLayer = LayerMask.GetMask("Map");
 
             _cam = Camera.main;
         }
@@ -89,6 +93,17 @@ namespace LudumDare56.Player
         public void OnSprint(InputAction.CallbackContext value)
         {
             _isSprinting = value.ReadValueAsButton();
+        }
+
+        public void OnAttack(InputAction.CallbackContext value)
+        {
+            if (value.phase == InputActionPhase.Started)
+            {
+                if (Physics.Raycast(_camHead.transform.position, _camHead.transform.forward, out var hit, 10f, _attackLayer))
+                {
+                    Debug.Log(hit.collider.name);
+                }
+            }
         }
     }
 }
