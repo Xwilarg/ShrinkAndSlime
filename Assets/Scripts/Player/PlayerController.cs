@@ -1,4 +1,5 @@
 using LudumDare56.SO;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -12,8 +13,10 @@ namespace LudumDare56.Player
         [SerializeField]
         private GameObject _model;
 
+        [SerializeField]
+        private CinemachineOrbitalFollow _camHead;
+
         private CharacterController _controller;
-        private Animator _anim;
         private Vector2 _mov;
         private bool _isSprinting;
         private float _verticalSpeed;
@@ -25,7 +28,6 @@ namespace LudumDare56.Player
         private void Awake()
         {
             _controller = GetComponent<CharacterController>();
-            _anim = GetComponentInChildren<Animator>();
 
             Cursor.lockState = CursorLockMode.Locked;
 
@@ -38,6 +40,8 @@ namespace LudumDare56.Player
             {
                 return;
             }
+
+            _camHead.transform.eulerAngles = new(_camHead.VerticalAxis.Value, _camHead.HorizontalAxis.Value, 0f);
 
             var pos = _mov;
             Vector3 desiredMove = _cam.transform.forward * pos.y + _cam.transform.right * pos.x;
@@ -72,7 +76,6 @@ namespace LudumDare56.Player
         public void OnMovement(InputAction.CallbackContext value)
         {
             _mov = value.ReadValue<Vector2>().normalized;
-            //_anim.SetBool("IsMoving", _mov.magnitude > 0f);
         }
 
         public void OnJump(InputAction.CallbackContext value)
