@@ -25,6 +25,8 @@ namespace LudumDare56.Player
 
         private int _attackLayer;
 
+        private bool _isShooting;
+
         private bool CanMove => true;
 
         private void Awake()
@@ -43,6 +45,12 @@ namespace LudumDare56.Player
             if (!CanMove)
             {
                 return;
+            }
+
+            if (_isShooting && Physics.Raycast(_camHead.transform.position, _camHead.transform.forward, out var hit, 10f, _attackLayer) && hit.collider.CompareTag("Monster"))
+            {
+                var size = Mathf.Clamp(hit.collider.transform.localScale.x - .5f * Time.deltaTime, .2f, 1f);
+                hit.collider.transform.localScale = Vector3.one * size;
             }
 
             _camHead.transform.eulerAngles = new(_camHead.VerticalAxis.Value, _camHead.HorizontalAxis.Value, 0f);
@@ -99,13 +107,11 @@ namespace LudumDare56.Player
         {
             if (value.phase == InputActionPhase.Started)
             {
-                if (Physics.Raycast(_camHead.transform.position, _camHead.transform.forward, out var hit, 10f, _attackLayer))
-                {
-                    if (hit.collider.CompareTag("Monster"))
-                    {
-                        hit.collider.transform.localScale -= Vector3.one * .2f;
-                    }
-                }
+                _isShooting = true;
+            }
+            else if (value.phase == InputActionPhase.Canceled)
+            {
+                _isShooting = false;
             }
         }
     }
