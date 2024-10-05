@@ -31,7 +31,7 @@ namespace LudumDare56.Slime
 
         private int _clicked = 0;
         private float _clickTime;
-        private float _clickDelay = 0.5f;
+        private float _clickDelay = 0.3f;
 
         private bool _isCheckingClicks = false;
 
@@ -46,6 +46,11 @@ namespace LudumDare56.Slime
             if (_playerTransform == null)
             {
                 _playerTransform = Object.FindFirstObjectByType<PlayerController>().transform;
+            }
+
+            if(_handAnimator)
+            {
+                _handAnimator.speed = 2.5f; // speed of only the hand should be a smidge sped up!
             }
         }
 
@@ -223,7 +228,6 @@ namespace LudumDare56.Slime
 
             if(_timeElapsed < _lerpDuration)
             {
-                Debug.Log(_timeElapsed);
                 transform.localScale = Vector3.Lerp(_startScale, _targetScale, _timeElapsed/_lerpDuration); // keep growing!
                 _timeElapsed += Time.deltaTime;
             }
