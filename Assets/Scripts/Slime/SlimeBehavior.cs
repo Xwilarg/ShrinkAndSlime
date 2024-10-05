@@ -1,6 +1,8 @@
 using LudumDare56.Player;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.InputSystem;
 
 namespace LudumDare56.Slime
 {
@@ -14,7 +16,7 @@ namespace LudumDare56.Slime
         [SerializeField] private Animator _handAnimator; // we are setting off triggers based on what we command the slime!
 
         private NavMeshAgent agent;
-        private Transform _targetDestination;
+        private Vector3 _targetDestination;
         private Camera _cam;
         private MeshRenderer _renderer;
         private Vector3 _slimeSize;
@@ -29,7 +31,9 @@ namespace LudumDare56.Slime
 
         private int _clicked = 0;
         private float _clickTime;
-        private float _clickDelay = 0.05f;
+        private float _clickDelay = 0.5f;
+
+        private bool _isCheckingClicks = false;
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
@@ -56,16 +60,16 @@ namespace LudumDare56.Slime
             {
                 //Checking if we're at the destination the player put the slime at
                 //if we have a target AND we are close to the target
-                if (_targetDestination && Vector3.Distance(transform.position, _targetDestination.position) < 3.5)
+                if (Vector3.Distance(transform.position, _targetDestination) < 3.5)
                 {
                     //TODO: Maybe check for nearby creatures to eat?
                     if (_monsterToEat)
                     {
                         CheckForEdibleObjects(_monsterToEat);
+                        _monsterToEat = null;
                     }
-                    //THEN, return to the player
-                    _monsterToEat = null;
-                    _isfollowing = true;
+
+                    //Stay there if there's no monster to eat
                 }
                 else //else try to get back to the player if we're too far!
                 {
@@ -86,54 +90,84 @@ namespace LudumDare56.Slime
         }
 
 
-        public void DirectSlime()
+        public void DirectSlime(InputAction.CallbackContext context)
         {
-            _clicked++;
-            if (_clicked == 1)
+            if (context.canceled) // if we RELEASED the mouse button
             {
-                _clickTime = Time.time;
-
-                _isfollowing = false;
-
-                Ray ray = _cam.ScreenPointToRay(Input.mousePosition);
-                RaycastHit hit;
-
-                if (Physics.Raycast(ray, out hit))
+                _clicked++;
+                if (_clicked == 1)
                 {
-                    if (hit.collider.tag == "Monster")
+                    if (!_isCheckingClicks)
                     {
-                        _monsterToEat = hit.collider.gameObject;
+                        StartCoroutine(CheckForDoubleClick());
                     }
-                    _targetDestination = hit.transform;
-                    agent.SetDestination(hit.point);
 
-                    if (_handAnimator)
-                    {
-                        _handAnimator.SetTrigger("GoThere");
-                    }
-                   
                 }
-            }
-
-            if (_clicked > 1 && Time.time - _clickTime < _clickDelay) // double click to tell slime to come back
-            {
-                _clicked = 0;
-                _clickTime = 0;
-                _isfollowing = true;
-
-                if(_handAnimator)
-                {
-                    _handAnimator.SetTrigger("ComeHere");
-                }
-                
-            }
-
-            else if(_clicked > 2 || Time.time > 1) //reset if you click more than twice or if it's been more than a second
-            {
-                _clicked = 0;
             }
         }
 
+        private IEnumerator CheckForDoubleClick()
+        {
+            _isCheckingClicks = true;
+            _clickTime = 0f;
+            while (_clicked != 0)
+            {
+                yield return new WaitForEndOfFrame();
+                _clickTime += Time.deltaTime;
+
+                if(_clickTime >= _clickDelay)
+                {
+                    if(_clicked ==1)
+                    {
+                        GoToLocation();
+                    }
+                    else // the double-click!
+                    {
+                        ComeBack();
+                    }
+                    _clicked = 0; 
+                    _isCheckingClicks= false;
+                }
+
+            }
+        }
+
+        private void ComeBack()
+        {
+            _clicked = 0;
+            _clickTime = 0;
+            _isfollowing = true;
+
+            if(_handAnimator)
+            {
+                _handAnimator.SetTrigger("ComeHere");
+            }
+          
+        }
+
+        private void GoToLocation()
+        {
+            _isfollowing = false;
+
+            Ray ray = _cam.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit))
+            {
+                if (hit.collider.tag == "Monster")
+                {
+                    _monsterToEat = hit.collider.gameObject;
+                }
+                _targetDestination = hit.point;
+                agent.SetDestination(_targetDestination);
+
+            }
+
+            if(_handAnimator)
+            {
+                _handAnimator.SetTrigger("GoThere");
+            }
+        }
 
         public void CheckForEdibleObjects(GameObject obj)
         {
