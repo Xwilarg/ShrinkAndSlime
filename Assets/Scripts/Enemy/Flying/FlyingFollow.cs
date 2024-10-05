@@ -11,8 +11,8 @@ namespace LudumDare56.Enemy.Flying
             revDir.y = 5f * (1f - ScaleProgression + .1f);
 
             var prev = _model.eulerAngles;
-            _model.LookAt(PlayerController.Instance.transform);
-            _model.eulerAngles = new(prev.x, transform.eulerAngles.y, prev.z);
+            _model.LookAt(PlayerController.Instance.transform, Vector3.up);
+            _model.eulerAngles = new(prev.x, _model.transform.eulerAngles.y, prev.z);
 
             if (Vector3.Distance(transform.position, revDir) < .1f)
             {
