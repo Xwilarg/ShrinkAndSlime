@@ -51,7 +51,7 @@ namespace LudumDare56.Player
                 return;
             }
 
-            if (_isShooting && Physics.Raycast(_camHead.transform.position, _camHead.transform.forward, out var hit, 1000f, _attackLayer) && hit.collider.TryGetComponent<IScalable>(out var sc))
+            if (_isShooting && Physics.Raycast(_camHead.transform.position, _camHead.transform.forward, out var hit, 1000f, _attackLayer) && hit.collider.transform.parent.TryGetComponent<IScalable>(out var sc))
             {
                 sc.ScaleProgression = Mathf.Clamp01(sc.ScaleProgression + Time.deltaTime);
                 var size = Mathf.Lerp(sc.BaseScale, sc.BaseScale * .1f, sc.ScaleProgression);

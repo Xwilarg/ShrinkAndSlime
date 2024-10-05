@@ -4,7 +4,10 @@ namespace LudumDare56.Enemy
 {
     public abstract class AEnemyController : MonoBehaviour, IScalable
     {
-        public GameObject GameObject => gameObject;
+        [SerializeField]
+        protected Transform _model;
+
+        public GameObject GameObject => _model.gameObject;
 
         public float BaseScale { private set; get; }
 
@@ -12,7 +15,7 @@ namespace LudumDare56.Enemy
 
         protected virtual void Awake()
         {
-            BaseScale = transform.localScale.x;
+            BaseScale = _model.localScale.x;
         }
     }
 }
