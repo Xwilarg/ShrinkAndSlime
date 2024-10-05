@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace LudumDare56.Slime
 {
-    public class SlimeEatingBehavior : MonoBehaviour //TODO: See if we still need this...Collisions aren't working?
+    public class SlimeEatingBehavior : MonoBehaviour // If a monster comes into the radius, try to eat it!
     {
         private SlimeBehavior _slime;
 
@@ -12,7 +12,6 @@ namespace LudumDare56.Slime
         }
         private void OnTriggerStay(Collider other)
         {
-            Debug.Log("yo???");
             _slime.CheckForEdibleObjects(other.gameObject);
         }
 
