@@ -8,6 +8,11 @@ namespace LudumDare56.Enemy
         public UnityEvent<Collider> OnTriggerEnterEvt { get; } = new();
         public UnityEvent<Collider> OnTriggerExitEvt { get; } = new();
 
+
+        private void Awake()
+        {
+            tag = "Monster"; //Needs this monster tag in case the raycast hits this instead of the model! -Gen
+        }
         private void OnTriggerEnter(Collider other)
         {
             OnTriggerEnterEvt.Invoke(other);

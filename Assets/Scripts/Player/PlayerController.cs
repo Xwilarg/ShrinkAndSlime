@@ -91,13 +91,17 @@ namespace LudumDare56.Player
 
                     _lr.enabled = true;
                     if (Physics.Raycast(_camHead.transform.position, _camHead.transform.forward, out var hit, 1000f, _attackLayer)
-                        && hit.collider.CompareTag("Monster")
-                        && hit.collider.transform.parent.parent.TryGetComponent<IScalable>(out var sc))
+                        && hit.collider.CompareTag("Monster"))
                     {
-                        sc.ScaleProgression = Mathf.Clamp01(sc.ScaleProgression + Time.deltaTime);
-                        var size = Mathf.Lerp(sc.BaseScale, sc.BaseScale * .1f, sc.ScaleProgression);
-                        hit.collider.transform.localScale = Vector3.one * size;
-                        _rayTarget = hit.point;
+                        if (hit.collider.transform.parent.parent.TryGetComponent<IScalable>(out var sc) ||
+                            hit.collider.transform.parent.TryGetComponent(out sc))
+                        {
+                            sc.ScaleProgression = Mathf.Clamp01(sc.ScaleProgression + Time.deltaTime);
+                            var size = Mathf.Lerp(sc.BaseScale, sc.BaseScale * .1f, sc.ScaleProgression);
+                            hit.collider.transform.localScale = Vector3.one * size;
+                            _rayTarget = hit.point;
+                        }
+                      
                     }
                     else
                     {
