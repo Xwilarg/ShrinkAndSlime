@@ -6,8 +6,9 @@ namespace LudumDare56.Enemy
     {
         private Rigidbody _rb;
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             _rb = GetComponent<Rigidbody>();
         }
 

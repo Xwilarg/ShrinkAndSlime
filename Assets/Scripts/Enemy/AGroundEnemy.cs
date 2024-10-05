@@ -1,4 +1,3 @@
-using UnityEngine;
 using UnityEngine.AI;
 
 namespace LudumDare56.Enemy
@@ -7,8 +6,9 @@ namespace LudumDare56.Enemy
     {
         NavMeshAgent navMeshAgent;
 
-        protected virtual void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             navMeshAgent = GetComponent<NavMeshAgent>();
         }
     }

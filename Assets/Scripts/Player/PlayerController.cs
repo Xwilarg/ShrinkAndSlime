@@ -1,3 +1,4 @@
+using LudumDare56.Enemy;
 using LudumDare56.SO;
 using Unity.Cinemachine;
 using UnityEngine;
@@ -50,9 +51,10 @@ namespace LudumDare56.Player
                 return;
             }
 
-            if (_isShooting && Physics.Raycast(_camHead.transform.position, _camHead.transform.forward, out var hit, 10f, _attackLayer) && hit.collider.CompareTag("Monster"))
+            if (_isShooting && Physics.Raycast(_camHead.transform.position, _camHead.transform.forward, out var hit, 10f, _attackLayer) && hit.collider.TryGetComponent<IScalable>(out var sc))
             {
-                var size = Mathf.Clamp(hit.collider.transform.localScale.x - .5f * Time.deltaTime, .2f, hit.collider.transform.localScale.x);
+                sc.ScaleProgression = Mathf.Clamp01(sc.ScaleProgression + Time.deltaTime);
+                var size = Mathf.Lerp(sc.BaseScale, sc.BaseScale * .1f, sc.ScaleProgression);
                 hit.collider.transform.localScale = Vector3.one * size;
             }
 
