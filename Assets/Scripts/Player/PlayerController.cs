@@ -45,6 +45,8 @@ namespace LudumDare56.Player
 
         private LineRenderer _lr;
 
+        private Vector3? _rayTarget;
+
         private bool CanMove => true;
 
         private void Awake()
@@ -62,6 +64,14 @@ namespace LudumDare56.Player
             _reticle.color = Color.black;
 
             UpdateUI();
+        }
+
+        private void Update()
+        {
+            if (_rayTarget != null)
+            {
+                _lr.SetPositions(new[] { _gunEnd.transform.position, _rayTarget.Value });
+            }
         }
 
         private void FixedUpdate()
@@ -87,11 +97,11 @@ namespace LudumDare56.Player
                         sc.ScaleProgression = Mathf.Clamp01(sc.ScaleProgression + Time.deltaTime);
                         var size = Mathf.Lerp(sc.BaseScale, sc.BaseScale * .1f, sc.ScaleProgression);
                         hit.collider.transform.localScale = Vector3.one * size;
-                        _lr.SetPositions(new[] { _gunEnd.transform.position, hit.point });
+                        _rayTarget = hit.point;
                     }
                     else
                     {
-                        _lr.SetPositions(new[] { _gunEnd.transform.position, _camHead.transform.position + (_camHead.transform.forward * 1000f) });
+                        _rayTarget = _camHead.transform.position + (_camHead.transform.forward * 1000f);
                     }
 
                     _reticle.color = Color.blue;
@@ -100,12 +110,14 @@ namespace LudumDare56.Player
                 {
                     _reticle.color = Color.red;
                     _lr.enabled = false;
+                    _rayTarget = null;
                 }
             }
             else
             {
                 _reticle.color = Color.black;
                 _lr.enabled = false;
+                _rayTarget = null;
             }
 
             _camHead.transform.eulerAngles = new(_camHead.VerticalAxis.Value, _camHead.HorizontalAxis.Value, 0f);
