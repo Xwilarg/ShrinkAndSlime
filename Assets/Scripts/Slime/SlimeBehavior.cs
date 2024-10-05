@@ -8,8 +8,10 @@ namespace LudumDare56.Slime
     {
         private bool _isfollowing = true; // following Player by default
         [SerializeField] private Transform _playerTransform;
-        [SerializeField] private float _maxDistFromPlayer = 15;
+      //  [SerializeField] private float _maxDistFromPlayer = 15; //TODO: Discuss if we still want this
         [SerializeField] private float _growMultiplier = 1.5f;
+        [SerializeField] private float _lerpDuration = 2f; // how long it takes to grow into the new size
+        [SerializeField] private Animator _handAnimator; // we are setting off triggers based on what we command the slime!
 
         private NavMeshAgent agent;
         private Transform _targetDestination;
@@ -19,6 +21,15 @@ namespace LudumDare56.Slime
 
         private GameObject _monsterToEat;
 
+        private float _timeElapsed;
+        private bool _isGrowing = false;
+
+        private Vector3 _targetScale;
+        private Vector3 _startScale;
+
+        private int _clicked = 0;
+        private float _clickTime;
+        private float _clickDelay = 0.05f;
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
@@ -58,36 +69,72 @@ namespace LudumDare56.Slime
                 }
                 else //else try to get back to the player if we're too far!
                 {
+                    //Commented out because I want to discuss if we think this is necessary to keep! -Geneva
+                    /*
                     var dist = Vector3.Distance(transform.position, _playerTransform.position);
                     if (dist > _maxDistFromPlayer)
                     {
                         _isfollowing = true;
-                    }
+                    }*/
                 }
+            }
+
+            if(_isGrowing)
+            {
+                Grow();
             }
         }
 
 
         public void DirectSlime()
         {
-            _isfollowing= false;
-
-            Ray ray = _cam.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit))
+            //TODO: Move this clicking functionality into it's own function to be called by the player input
+            _clicked++;
+            if (_clicked == 1)
             {
-                if (hit.collider.tag == "Monster")
+                _clickTime = Time.time;
+
+                _isfollowing = false;
+
+                Ray ray = _cam.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
+
+                if (Physics.Raycast(ray, out hit))
                 {
-                    _monsterToEat = hit.collider.gameObject;
+                    if (hit.collider.tag == "Monster")
+                    {
+                        _monsterToEat = hit.collider.gameObject;
+                    }
+                    _targetDestination = hit.transform;
+                    agent.SetDestination(hit.point);
+
+                    if (_handAnimator)
+                    {
+                        _handAnimator.SetTrigger("GoThere");
+                    }
+                   
                 }
-                _targetDestination = hit.transform;
-                agent.SetDestination(hit.point);
+            }
 
+            if (_clicked > 1 && Time.time - _clickTime < _clickDelay) // double click to tell slime to come back
+            {
+                _clicked = 0;
+                _clickTime = 0;
+                _isfollowing = true;
 
+                if(_handAnimator)
+                {
+                    _handAnimator.SetTrigger("ComeHere");
+                }
+                
+            }
 
+            else if(_clicked > 2 || Time.time > 1) //reset if you click more than twice or if it's been more than a second
+            {
+                _clicked = 0;
             }
         }
+
 
         public void CheckForEdibleObjects(GameObject obj)
         {
@@ -130,8 +177,30 @@ namespace LudumDare56.Slime
         {
 
             Destroy(obj.transform.parent.gameObject); // The enemy models are usually inside a parent, so we'll destroy the parent
-            transform.localScale *= _growMultiplier;
+
             _isfollowing = true; // follow the player again after we eat something!
+
+            _targetScale = transform.localScale * _growMultiplier;
+            _startScale = transform.localScale;
+            _isGrowing = true;
+        }
+
+        private void Grow()
+        {
+
+            if(_timeElapsed < _lerpDuration)
+            {
+                Debug.Log(_timeElapsed);
+                transform.localScale = Vector3.Lerp(_startScale, _targetScale, _timeElapsed/_lerpDuration); // keep growing!
+                _timeElapsed += Time.deltaTime;
+            }
+            else
+            {
+                transform.localScale = _targetScale;
+                _isGrowing = false;
+            }
+
+
         }
 
         private bool IsSlimeBigger(Vector3 objectSize)
