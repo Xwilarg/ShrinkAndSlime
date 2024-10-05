@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace LudumDare56.Slime
 {
-    public class SlimeEatingBehavior : MonoBehaviour // If a monster comes into the radius, try to eat it!
+    public class SlimeObjectDetector : MonoBehaviour // If a monster comes into the radius, try to eat it!
     {
         private SlimeBehavior _slime;
 
