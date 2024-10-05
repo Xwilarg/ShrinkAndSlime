@@ -250,9 +250,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerTransform: {fileID: 0}
-  _maxDistFromPlayer: 30
-  _growMultiplier: 1.25
+  _growMultiplier: 1.35
   _lerpDuration: 1.5
+  _handAnimator: {fileID: 0}
 --- !u!195 &7263916896597726689
 NavMeshAgent:
   m_ObjectHideFlags: 0
