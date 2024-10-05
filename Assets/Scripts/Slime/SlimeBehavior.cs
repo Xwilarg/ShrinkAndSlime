@@ -88,7 +88,6 @@ namespace LudumDare56.Slime
 
         public void DirectSlime()
         {
-            //TODO: Move this clicking functionality into it's own function to be called by the player input
             _clicked++;
             if (_clicked == 1)
             {
