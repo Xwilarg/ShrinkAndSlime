@@ -7,6 +7,8 @@ namespace LudumDare56.Enemy.Flying
     {
         private void FixedUpdate()
         {
+            var d = Vector3.Distance(transform.position, PlayerController.Instance.transform.position);
+
             var revDir = PlayerController.Instance.transform.position + ((transform.position - PlayerController.Instance.transform.position).normalized * 5f) - (Vector3.one * 5f * (1f - ScaleProgression + .1f));
             revDir.y = 5f * (1f - ScaleProgression + .1f);
 
@@ -14,7 +16,14 @@ namespace LudumDare56.Enemy.Flying
             transform.LookAt(PlayerController.Instance.transform);
             transform.eulerAngles = new(prev.x, transform.eulerAngles.y, prev.z);
 
-            MoveTowards(revDir, 5f);
+            if (Vector3.Distance(transform.position, revDir) < .1f)
+            {
+                MoveTowards(transform.position, 0f);
+            }
+            else
+            {
+                MoveTowards(revDir, 5f);
+            }
         }
     }
 }
