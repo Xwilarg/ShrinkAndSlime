@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 3
   tags:
   - Monster
+  - Terrain
   - Slime
   layers:
   - Default
@@ -16,6 +17,7 @@ TagManager:
   - Map
   - Player
   - Monster
+  - Terrain
   - Slime
   - 
   - 
