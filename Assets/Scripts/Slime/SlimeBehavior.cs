@@ -9,7 +9,6 @@ namespace LudumDare56.Slime
     public class SlimeBehavior : MonoBehaviour
     {
         private bool _isfollowing = true; // following Player by default
-        [SerializeField] private Transform _playerTransform;
       //  [SerializeField] private float _maxDistFromPlayer = 15; //TODO: Discuss if we still want this
         [SerializeField] private float _growMultiplier = 1.5f;
         [SerializeField] private float _lerpDuration = 2f; // how long it takes to grow into the new size
@@ -18,7 +17,8 @@ namespace LudumDare56.Slime
         private NavMeshAgent agent;
         private Vector3 _targetDestination;
         private Camera _cam;
-        private MeshRenderer _renderer;
+        [SerializeField]
+        private SkinnedMeshRenderer _renderer;
         private Vector3 _slimeSize;
 
         private GameObject _monsterToEat;
@@ -40,13 +40,7 @@ namespace LudumDare56.Slime
         {
             agent = GetComponent<NavMeshAgent>();
             _cam = Camera.main;
-            _renderer = GetComponentInChildren<MeshRenderer>(); // Model is a child of the Slime object
             _slimeSize = _renderer.bounds.size;
-
-            if (_playerTransform == null)
-            {
-                _playerTransform = Object.FindFirstObjectByType<PlayerController>().transform;
-            }
 
             if(_handAnimator)
             {
@@ -59,7 +53,7 @@ namespace LudumDare56.Slime
         {
             if (_isfollowing)
             {
-                agent.SetDestination(_playerTransform.transform.position);
+                agent.SetDestination(PlayerController.Instance.transform.position);
             }
             else
             {
