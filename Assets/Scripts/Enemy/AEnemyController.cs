@@ -28,7 +28,6 @@ namespace LudumDare56.Enemy
         protected virtual void Awake()
         {
             BaseScale = _model.localScale.x;
-            _targetNode = LevelManager.Instance.FirstNode;
 
             var d = GetComponentInChildren<Detector>();
             d.OnTriggerEnterEvt.AddListener((c) =>
@@ -39,6 +38,11 @@ namespace LudumDare56.Enemy
             {
                 if (_fightingTarget != null && c.gameObject.GetInstanceID() == _fightingTarget.GetInstanceID()) _fightingTarget = null;
             });
+        }
+
+        protected virtual void Start()
+        {
+            _targetNode = LevelManager.Instance.FirstNode;
         }
     }
 }
