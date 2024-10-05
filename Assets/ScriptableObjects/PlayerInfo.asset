@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ForceMultiplier: 0.15
   SpeedRunningMultiplicator: 2
-  JumpForce: 0.5
+  JumpForce: 0.3
   GravityMultiplicator: 0.1
