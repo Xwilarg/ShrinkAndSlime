@@ -5,6 +5,12 @@ namespace LudumDare56.Enemy.Flying
 {
     public class FlyingFollow : AFlyingEnemy
     {
+        [SerializeField]
+        private GameObject _projectilePrefab;
+
+        [SerializeField]
+        private Transform _gunEnd;
+
         private void FixedUpdate()
         {
             Transform lookTarget;

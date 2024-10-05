@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 3
   tags:
   - Slime
+  - Monster
   layers:
   - Default
   - TransparentFX
@@ -17,6 +18,7 @@ TagManager:
   - Monster
   - 
   - Slime
+  - 
   - 
   - 
   - 
