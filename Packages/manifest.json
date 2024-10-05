@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.inkle.ink-unity-integration": "https://github.com/inkle/ink-unity-integration.git#upm",
     "com.unity.ai.navigation": "2.0.4",
     "com.unity.cinemachine": "3.1.2",
     "com.unity.collab-proxy": "2.5.2",
