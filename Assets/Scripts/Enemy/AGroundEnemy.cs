@@ -7,9 +7,17 @@ namespace LudumDare56.Enemy
     {
         NavMeshAgent navMeshAgent;
 
+        public GameObject target;
+
         protected virtual void Awake()
         {
             navMeshAgent = GetComponent<NavMeshAgent>();
+        }
+
+        private void Update()
+        {
+            if (target != null)
+                navMeshAgent.SetDestination(target.transform.position);
         }
     }
 }
