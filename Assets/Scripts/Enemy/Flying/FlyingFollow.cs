@@ -22,7 +22,7 @@ namespace LudumDare56.Enemy.Flying
                 if (_targetNode == null)
                 {
                     MoveTowards(transform.position, 0f);
-                    lookTarget = transform.forward;
+                    lookTarget = transform;
                 }
                 else
                 {

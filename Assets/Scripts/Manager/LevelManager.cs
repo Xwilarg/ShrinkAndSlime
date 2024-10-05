@@ -15,7 +15,7 @@ namespace LudumDare56.Manager
         private void Awake()
         {
             Instance = this;
-            SceneManager.LoadScene("Level", LoadSceneMode.Additive);
+            SceneManager.LoadScene("Level Design", LoadSceneMode.Additive);
         }
     }
 }
