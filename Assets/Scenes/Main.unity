@@ -242,7 +242,7 @@ MonoBehaviour:
   VerticalAxis:
     Value: 17.5
     Center: 17.5
-    Range: {x: -10, y: 45}
+    Range: {x: -50, y: 45}
     Wrap: 0
     Recentering:
       Enabled: 0
@@ -368,6 +368,14 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 2f6bc68f60e147c4d9a9696140dd8457, type: 3}
       propertyPath: m_Name
       value: ant
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 2f6bc68f60e147c4d9a9696140dd8457, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 2f6bc68f60e147c4d9a9696140dd8457, type: 3}
+      propertyPath: m_TagString
+      value: Monster
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1816,3 +1824,4 @@ SceneRoots:
   - {fileID: 2076809909}
   - {fileID: 1126050983}
   - {fileID: 307508467}
+  - {fileID: 752345089}
