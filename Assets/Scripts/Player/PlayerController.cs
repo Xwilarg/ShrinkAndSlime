@@ -1,5 +1,6 @@
 using LudumDare56.Enemy;
 using LudumDare56.SO;
+using TMPro;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -19,6 +20,9 @@ namespace LudumDare56.Player
         [SerializeField]
         private CinemachineOrbitalFollow _camHead;
 
+        [SerializeField]
+        private TMP_Text _energyText;
+
         private CharacterController _controller;
         private Vector2 _mov;
         private bool _isSprinting;
@@ -29,6 +33,8 @@ namespace LudumDare56.Player
         private int _attackLayer;
 
         private bool _isShooting;
+
+        private float _energyAmount = 75f;
 
         private bool CanMove => true;
 
@@ -42,6 +48,8 @@ namespace LudumDare56.Player
             _attackLayer = LayerMask.GetMask("Map", "Monster");
 
             _cam = Camera.main;
+
+            UpdateUI();
         }
 
         private void FixedUpdate()
@@ -51,11 +59,18 @@ namespace LudumDare56.Player
                 return;
             }
 
-            if (_isShooting && Physics.Raycast(_camHead.transform.position, _camHead.transform.forward, out var hit, 1000f, _attackLayer) && hit.collider.transform.parent.TryGetComponent<IScalable>(out var sc))
+            if (_isShooting && _energyAmount > 0f)
             {
-                sc.ScaleProgression = Mathf.Clamp01(sc.ScaleProgression + Time.deltaTime);
-                var size = Mathf.Lerp(sc.BaseScale, sc.BaseScale * .1f, sc.ScaleProgression);
-                hit.collider.transform.localScale = Vector3.one * size;
+                _energyAmount -= Time.deltaTime * 10f;
+                if (_energyAmount < 0f) _energyAmount = 0f;
+                UpdateUI();
+
+                if (Physics.Raycast(_camHead.transform.position, _camHead.transform.forward, out var hit, 1000f, _attackLayer) && hit.collider.transform.parent.TryGetComponent<IScalable>(out var sc))
+                {
+                    sc.ScaleProgression = Mathf.Clamp01(sc.ScaleProgression + Time.deltaTime);
+                    var size = Mathf.Lerp(sc.BaseScale, sc.BaseScale * .1f, sc.ScaleProgression);
+                    hit.collider.transform.localScale = Vector3.one * size;
+                }
             }
 
             _camHead.transform.eulerAngles = new(_camHead.VerticalAxis.Value, _camHead.HorizontalAxis.Value, 0f);
@@ -88,6 +103,11 @@ namespace LudumDare56.Player
 
             var p = transform.position;
             _controller.Move(moveDir);
+        }
+
+        private void UpdateUI()
+        {
+            _energyText.text = $"{_energyAmount:0}%";
         }
 
         public void OnMovement(InputAction.CallbackContext value)
