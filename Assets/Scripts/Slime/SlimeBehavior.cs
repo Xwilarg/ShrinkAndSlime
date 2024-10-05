@@ -93,6 +93,20 @@ namespace LudumDare56.Slime
         {
             if (context.canceled) // if we RELEASED the mouse button
             {
+                // remembering WHERE we clicked
+                Ray ray = _cam.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
+
+                if (Physics.Raycast(ray, out hit))
+                {
+                    if (hit.collider.tag == "Monster")
+                    {
+                        _monsterToEat = hit.collider.gameObject;
+                    }
+                    _targetDestination = hit.point;
+                }
+
+                //checking for double click
                 _clicked++;
                 if (_clicked == 1)
                 {
@@ -147,22 +161,9 @@ namespace LudumDare56.Slime
         private void GoToLocation()
         {
             _isfollowing = false;
+            agent.SetDestination(_targetDestination);
 
-            Ray ray = _cam.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit))
-            {
-                if (hit.collider.tag == "Monster")
-                {
-                    _monsterToEat = hit.collider.gameObject;
-                }
-                _targetDestination = hit.point;
-                agent.SetDestination(_targetDestination);
-
-            }
-
-            if(_handAnimator)
+            if (_handAnimator)
             {
                 _handAnimator.SetTrigger("GoThere");
             }
