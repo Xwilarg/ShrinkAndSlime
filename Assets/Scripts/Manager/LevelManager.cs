@@ -1,5 +1,6 @@
 ﻿using LudumDare56.Map;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace LudumDare56.Manager
 {
@@ -14,6 +15,7 @@ namespace LudumDare56.Manager
         private void Awake()
         {
             Instance = this;
+            SceneManager.LoadScene("Level", LoadSceneMode.Additive);
         }
     }
 }
