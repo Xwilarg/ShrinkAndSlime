@@ -7,21 +7,41 @@ namespace LudumDare56.Enemy.Flying
     {
         private void FixedUpdate()
         {
-            var revDir = PlayerController.Instance.transform.position + ((transform.position - PlayerController.Instance.transform.position).normalized * 5f) - (Vector3.one * 5f * (1f - ScaleProgression + .1f));
-            revDir.y = 5f * (1f - ScaleProgression + .1f);
-
-            var prev = _model.eulerAngles;
-            _model.LookAt(PlayerController.Instance.transform, Vector3.up);
-            _model.eulerAngles = new(prev.x, _model.transform.eulerAngles.y, prev.z);
-
-            if (Vector3.Distance(transform.position, revDir) < .1f)
+            Transform lookTarget;
+            if (_fightingTarget == null)
             {
-                MoveTowards(transform.position, 0f);
+                lookTarget = _targetNode.transform;
+
+                var a = new Vector2(_targetNode.transform.position.x, _targetNode.transform.position.z);
+                var b = new Vector2(transform.position.x, transform.position.z);
+                if (Vector2.Distance(a, b) < .1f)
+                {
+                    _targetNode = _targetNode.NextNode;
+                }
+                var t = _targetNode.transform.position;
+                t.y = 7.5f;
+                MoveTowards(t, 5f);
             }
             else
             {
-                MoveTowards(revDir, 5f);
+                lookTarget = PlayerController.Instance.transform;
+
+                var revDir = PlayerController.Instance.transform.position + ((transform.position - PlayerController.Instance.transform.position).normalized * 5f) - (Vector3.one * 5f * (1f - ScaleProgression + .1f));
+                revDir.y = 5f * (1f - ScaleProgression + .1f);
+
+                if (Vector3.Distance(transform.position, revDir) < .1f)
+                {
+                    MoveTowards(transform.position, 0f);
+                }
+                else
+                {
+                    MoveTowards(revDir, 5f);
+                }
             }
+
+            var prev = _model.eulerAngles;
+            _model.LookAt(lookTarget, Vector3.up);
+            _model.eulerAngles = new(prev.x, _model.transform.eulerAngles.y, prev.z);
         }
     }
 }
