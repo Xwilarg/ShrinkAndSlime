@@ -1,4 +1,5 @@
 using LudumDare56.Player;
+using System.Collections;
 using UnityEngine;
 
 namespace LudumDare56.Enemy.Flying
@@ -10,6 +11,8 @@ namespace LudumDare56.Enemy.Flying
 
         [SerializeField]
         private Transform _gunEnd;
+
+        private bool _canShoot = true;
 
         private void FixedUpdate()
         {
@@ -43,11 +46,25 @@ namespace LudumDare56.Enemy.Flying
                 {
                     MoveTowards(revDir, 5f);
                 }
+
+                if (_canShoot)
+                {
+                    var go = Instantiate(_projectilePrefab, _gunEnd);
+                    go.GetComponent<Rigidbody>().linearVelocity = (PlayerController.Instance.transform.position - transform.position).normalized * 20f;
+                    StartCoroutine(Reload());
+                }
             }
 
-            var prev = _model.eulerAngles;
-            _model.LookAt(lookTarget, Vector3.up);
-            _model.eulerAngles = new(prev.x, _model.transform.eulerAngles.y, prev.z);
+            var prev = _modelContainer.eulerAngles;
+            _modelContainer.LookAt(lookTarget, Vector3.up);
+            _modelContainer.eulerAngles = new(prev.x, _modelContainer.transform.eulerAngles.y, prev.z);
+        }
+
+        private IEnumerator Reload()
+        {
+            _canShoot = false;
+            yield return new WaitForSeconds(3f);
+            _canShoot = true;
         }
     }
 }

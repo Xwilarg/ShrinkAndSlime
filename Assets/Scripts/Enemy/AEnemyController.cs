@@ -7,7 +7,7 @@ namespace LudumDare56.Enemy
     public abstract class AEnemyController : MonoBehaviour, IScalable
     {
         [SerializeField]
-        protected Transform _model;
+        protected Transform _modelContainer, _model;
 
         /// <summary>
         /// Next position the AI should go to
@@ -19,7 +19,7 @@ namespace LudumDare56.Enemy
         /// </summary>
         protected GameObject _fightingTarget;
 
-        public GameObject GameObject => _model.gameObject;
+        public GameObject GameObject => _modelContainer.gameObject;
 
         public float BaseScale { private set; get; }
 
