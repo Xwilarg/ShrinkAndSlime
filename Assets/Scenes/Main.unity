@@ -824,12 +824,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4356112319148438364, guid: dacefebac0dd27845898c26996f399e2, type: 3}
+      propertyPath: _renderer
+      value: 
+      objectReference: {fileID: 2145360975}
+    - target: {fileID: 4356112319148438364, guid: dacefebac0dd27845898c26996f399e2, type: 3}
       propertyPath: _handAnimator
       value: 
       objectReference: {fileID: 2088102079}
     - target: {fileID: 7263916896597726689, guid: dacefebac0dd27845898c26996f399e2, type: 3}
       propertyPath: m_BaseOffset
       value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7263916896597726689, guid: dacefebac0dd27845898c26996f399e2, type: 3}
+      propertyPath: m_AngularSpeed
+      value: 360
       objectReference: {fileID: 0}
     - target: {fileID: 8343174853826589355, guid: dacefebac0dd27845898c26996f399e2, type: 3}
       propertyPath: m_Name
@@ -2292,6 +2300,11 @@ RectTransform:
 Animator:
   m_CorrespondingSourceObject: {fileID: 3209832106497245617, guid: 597826eb9470c304c8ad05124ffbbe77, type: 3}
   m_PrefabInstance: {fileID: 1780449347}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &2145360975 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 2788943867344286557, guid: e6aadacbb93830248b5f5c2cdf4e03b6, type: 3}
+  m_PrefabInstance: {fileID: 1585083413}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2110341234570716571
 PrefabInstance:
