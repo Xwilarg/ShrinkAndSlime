@@ -7,6 +7,8 @@ namespace LudumDare56.Player
 {
     public class PlayerController : MonoBehaviour
     {
+        public static PlayerController Instance { private set; get; }
+
         [SerializeField]
         private PlayerInfo _info;
 
@@ -31,6 +33,7 @@ namespace LudumDare56.Player
 
         private void Awake()
         {
+            Instance = this;
             _controller = GetComponent<CharacterController>();
 
             Cursor.lockState = CursorLockMode.Locked;

@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Monster
   - Terrain
+  - Slime
   layers:
   - Default
   - TransparentFX
@@ -17,6 +18,7 @@ TagManager:
   - Player
   - Monster
   - Terrain
+  - Slime
   - 
   - 
   - 
