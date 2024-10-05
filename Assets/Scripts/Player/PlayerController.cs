@@ -4,7 +4,6 @@ using TMPro;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 
 namespace LudumDare56.Player
@@ -28,6 +27,9 @@ namespace LudumDare56.Player
         [SerializeField]
         private Image _reticle;
 
+        [SerializeField]
+        private Transform _gunEnd;
+
         private CharacterController _controller;
         private Vector2 _mov;
         private bool _isSprinting;
@@ -41,12 +43,15 @@ namespace LudumDare56.Player
 
         private float _energyAmount = 75f;
 
+        private LineRenderer _lr;
+
         private bool CanMove => true;
 
         private void Awake()
         {
             Instance = this;
             _controller = GetComponent<CharacterController>();
+            _lr = GetComponentInChildren<LineRenderer>();
 
             Cursor.lockState = CursorLockMode.Locked;
 
@@ -74,11 +79,17 @@ namespace LudumDare56.Player
                     if (_energyAmount < 0f) _energyAmount = 0f;
                     UpdateUI();
 
+                    _lr.enabled = true;
                     if (Physics.Raycast(_camHead.transform.position, _camHead.transform.forward, out var hit, 1000f, _attackLayer) && hit.collider.transform.parent.TryGetComponent<IScalable>(out var sc))
                     {
                         sc.ScaleProgression = Mathf.Clamp01(sc.ScaleProgression + Time.deltaTime);
                         var size = Mathf.Lerp(sc.BaseScale, sc.BaseScale * .1f, sc.ScaleProgression);
                         hit.collider.transform.localScale = Vector3.one * size;
+                        _lr.SetPositions(new[] { _gunEnd.transform.position, hit.point });
+                    }
+                    else
+                    {
+                        _lr.SetPositions(new[] { _gunEnd.transform.position, _camHead.transform.position + (_camHead.transform.forward * 1000f) });
                     }
 
                     _reticle.color = Color.blue;
@@ -86,11 +97,13 @@ namespace LudumDare56.Player
                 else
                 {
                     _reticle.color = Color.red;
+                    _lr.enabled = false;
                 }
             }
             else
             {
                 _reticle.color = Color.black;
+                _lr.enabled = false;
             }
 
             _camHead.transform.eulerAngles = new(_camHead.VerticalAxis.Value, _camHead.HorizontalAxis.Value, 0f);
