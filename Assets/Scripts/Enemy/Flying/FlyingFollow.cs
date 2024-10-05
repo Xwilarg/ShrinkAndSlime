@@ -19,17 +19,29 @@ namespace LudumDare56.Enemy.Flying
             Transform lookTarget;
             if (_fightingTarget == null)
             {
-                lookTarget = _targetNode.transform;
-
-                var a = new Vector2(_targetNode.transform.position.x, _targetNode.transform.position.z);
-                var b = new Vector2(transform.position.x, transform.position.z);
-                if (Vector2.Distance(a, b) < .1f)
+                if (_targetNode == null)
                 {
-                    _targetNode = _targetNode.NextNode;
+                    MoveTowards(transform.position, 0f);
                 }
-                var t = _targetNode.transform.position;
-                t.y = 7.5f;
-                MoveTowards(t, 5f);
+                else
+                {
+                    lookTarget = _targetNode.transform;
+
+                    var a = new Vector2(_targetNode.transform.position.x, _targetNode.transform.position.z);
+                    var b = new Vector2(transform.position.x, transform.position.z);
+                    if (Vector2.Distance(a, b) < .1f)
+                    {
+                        _targetNode = _targetNode.NextNode;
+                        if (_targetNode == null)
+                        {
+                            MoveTowards(transform.position, 0f);
+                            return;
+                        }
+                    }
+                    var t = _targetNode.transform.position;
+                    t.y = 7.5f;
+                    MoveTowards(t, 5f);
+                }
             }
             else
             {
