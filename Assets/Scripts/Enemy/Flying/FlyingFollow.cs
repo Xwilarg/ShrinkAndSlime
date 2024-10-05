@@ -7,8 +7,8 @@ namespace LudumDare56.Enemy.Flying
     {
         private void FixedUpdate()
         {
-            var revDir = PlayerController.Instance.transform.position + ((transform.position - PlayerController.Instance.transform.position).normalized * 5f) - (Vector3.one * 5f);
-            revDir.y = 5f;
+            var revDir = PlayerController.Instance.transform.position + ((transform.position - PlayerController.Instance.transform.position).normalized * 5f) - (Vector3.one * 5f * (1f - ScaleProgression + .1f));
+            revDir.y = 5f * (1f - ScaleProgression + .1f);
 
             var prev = transform.eulerAngles;
             transform.LookAt(PlayerController.Instance.transform);
