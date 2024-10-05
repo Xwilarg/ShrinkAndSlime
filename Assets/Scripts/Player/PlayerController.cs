@@ -4,6 +4,8 @@ using TMPro;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering.Universal;
+using UnityEngine.UI;
 
 namespace LudumDare56.Player
 {
@@ -22,6 +24,9 @@ namespace LudumDare56.Player
 
         [SerializeField]
         private TMP_Text _energyText;
+
+        [SerializeField]
+        private Image _reticle;
 
         private CharacterController _controller;
         private Vector2 _mov;
@@ -49,6 +54,8 @@ namespace LudumDare56.Player
 
             _cam = Camera.main;
 
+            _reticle.color = Color.black;
+
             UpdateUI();
         }
 
@@ -59,18 +66,31 @@ namespace LudumDare56.Player
                 return;
             }
 
-            if (_isShooting && _energyAmount > 0f)
+            if (_isShooting)
             {
-                _energyAmount -= Time.deltaTime * 10f;
-                if (_energyAmount < 0f) _energyAmount = 0f;
-                UpdateUI();
-
-                if (Physics.Raycast(_camHead.transform.position, _camHead.transform.forward, out var hit, 1000f, _attackLayer) && hit.collider.transform.parent.TryGetComponent<IScalable>(out var sc))
+                if (_energyAmount > 0f)
                 {
-                    sc.ScaleProgression = Mathf.Clamp01(sc.ScaleProgression + Time.deltaTime);
-                    var size = Mathf.Lerp(sc.BaseScale, sc.BaseScale * .1f, sc.ScaleProgression);
-                    hit.collider.transform.localScale = Vector3.one * size;
+                    _energyAmount -= Time.deltaTime * 10f;
+                    if (_energyAmount < 0f) _energyAmount = 0f;
+                    UpdateUI();
+
+                    if (Physics.Raycast(_camHead.transform.position, _camHead.transform.forward, out var hit, 1000f, _attackLayer) && hit.collider.transform.parent.TryGetComponent<IScalable>(out var sc))
+                    {
+                        sc.ScaleProgression = Mathf.Clamp01(sc.ScaleProgression + Time.deltaTime);
+                        var size = Mathf.Lerp(sc.BaseScale, sc.BaseScale * .1f, sc.ScaleProgression);
+                        hit.collider.transform.localScale = Vector3.one * size;
+                    }
+
+                    _reticle.color = Color.blue;
                 }
+                else
+                {
+                    _reticle.color = Color.red;
+                }
+            }
+            else
+            {
+                _reticle.color = Color.black;
             }
 
             _camHead.transform.eulerAngles = new(_camHead.VerticalAxis.Value, _camHead.HorizontalAxis.Value, 0f);

@@ -1953,6 +1953,7 @@ MonoBehaviour:
   _model: {fileID: 1158878969}
   _camHead: {fileID: 273692043}
   _energyText: {fileID: 762172615}
+  _reticle: {fileID: 1750345347}
 --- !u!1 &1750345345
 GameObject:
   m_ObjectHideFlags: 0
