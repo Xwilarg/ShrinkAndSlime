@@ -1,6 +1,7 @@
 using LudumDare56.Enemy;
 using LudumDare56.Manager;
 using LudumDare56.SO;
+using System.Collections;
 using TMPro;
 using Unity.Cinemachine;
 using UnityEngine;
@@ -31,6 +32,9 @@ namespace LudumDare56.Player
         [SerializeField]
         private Transform _gunEnd;
 
+        [SerializeField]
+        private Transform _healthUI;
+
         private CharacterController _controller;
         private Vector2 _mov;
         private bool _isSprinting;
@@ -47,6 +51,8 @@ namespace LudumDare56.Player
         private LineRenderer _lr;
 
         private Vector3? _rayTarget;
+
+        private bool _canTakeDamage = true;
 
         private void Awake()
         {
@@ -163,6 +169,26 @@ namespace LudumDare56.Player
             if (_energyAmount > 100f) _energyAmount = 100f;
 
             UpdateUI();
+        }
+
+        public void TakeDamage()
+        {
+            if (_healthUI.childCount > 0)
+            {
+                Destroy(_healthUI.GetChild(_healthUI.childCount - 1).gameObject);
+                StartCoroutine(TakeDamageInvul());
+            }
+            else
+            {
+                // TODO: Gameover
+            }
+        }
+
+        private IEnumerator TakeDamageInvul()
+        {
+            _canTakeDamage = false;
+            yield return new WaitForSeconds(1f);
+            _canTakeDamage = true;
         }
 
         private void UpdateUI()

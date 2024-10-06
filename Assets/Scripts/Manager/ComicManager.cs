@@ -14,7 +14,7 @@ namespace LudumDare56.Manager
 
         private bool _needIncr = false;
 
-        private void LateUpdate()
+        private void Update()
         {
             if (_needIncr)
             {

@@ -12,6 +12,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: NormalEnemy Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 4106797709409331746, guid: 385a5fe1d0f191544af9d5a827b798dc, type: 3}
+      propertyPath: m_Constraints
+      value: 80
+      objectReference: {fileID: 0}
     - target: {fileID: 6227822200630731761, guid: 385a5fe1d0f191544af9d5a827b798dc, type: 3}
       propertyPath: m_Center.y
       value: 0

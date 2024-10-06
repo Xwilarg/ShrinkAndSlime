@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using LudumDare56.Player;
+using UnityEngine;
 
 namespace LudumDare56.Enemy.Flying
 {
@@ -6,6 +7,10 @@ namespace LudumDare56.Enemy.Flying
     {
         private void OnCollisionEnter(Collision collision)
         {
+            if (collision.collider.TryGetComponent<PlayerController>(out var pc))
+            {
+                pc.TakeDamage();
+            }
             Destroy(gameObject);
         }
     }
