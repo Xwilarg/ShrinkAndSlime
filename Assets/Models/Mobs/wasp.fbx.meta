@@ -29,7 +29,94 @@ ModelImporter:
     animationWrapMode: 0
     extraExposedTransformPaths: []
     extraUserProperties: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Armature.001|Animation.Attack
+      takeName: Armature.001|Animation.Attack
+      internalID: -4260281297928333651
+      firstFrame: 0
+      lastFrame: 60
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Armature.001|Animation.Idle
+      takeName: Armature.001|Animation.Idle
+      internalID: 2917773947112567064
+      firstFrame: 0
+      lastFrame: 60
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Armature.001|Animation.Move
+      takeName: Armature.001|Animation.Move
+      internalID: 6514731825371257320
+      firstFrame: 0
+      lastFrame: 20
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     isReadable: 0
   meshes:
     lODScreenPercentages: []
@@ -80,7 +167,157 @@ ModelImporter:
   humanDescription:
     serializedVersion: 3
     human: []
-    skeleton: []
+    skeleton:
+    - name: wasp(Clone)
+      parentName: 
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Wasp
+      parentName: wasp(Clone)
+      position: {x: -0.000000107102096, y: -0.0000013113022, z: 0.00000023236498}
+      rotation: {x: -0.7071068, y: 0.000000030929204, z: 0.000000030888046, w: 0.7071068}
+      scale: {x: 100, y: 100, z: 99.999985}
+    - name: Armature.001
+      parentName: wasp(Clone)
+      position: {x: -0.04082713, y: 4.5512743, z: -0.9798511}
+      rotation: {x: -0.08275476, y: 0.0018627947, z: -0.047209512, w: 0.9954494}
+      scale: {x: 100.00001, y: 99.99999, z: 100.00001}
+    - name: WaspBody
+      parentName: Armature.001
+      position: {x: 0.00080303644, y: 0.0006997676, z: 0.00011367572}
+      rotation: {x: 0.3358701, y: -0.10812435, z: 0.021429216, w: 0.93543637}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Bone.002
+      parentName: WaspBody
+      position: {x: 0.000541063, y: 0.021884112, z: 0.0025196634}
+      rotation: {x: 0.037350204, y: 0.6755311, z: -0.04252636, w: -0.73515594}
+      scale: {x: 0.99999994, y: 0.9999999, z: 0.9999999}
+    - name: Bone.002_end
+      parentName: Bone.002
+      position: {x: -0, y: 0.010000001, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Bone.003
+      parentName: WaspBody
+      position: {x: -0.0028374796, y: -0.024811357, z: -0.012587635}
+      rotation: {x: -0.6868779, y: -0.009404437, z: 0.71784025, w: 0.11320631}
+      scale: {x: 1.0000001, y: 1, z: 1.0000006}
+    - name: Bone.003_end
+      parentName: Bone.003
+      position: {x: -0, y: 0.01, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Wing.L
+      parentName: WaspBody
+      position: {x: -0.0069247577, y: 0.012233625, z: -0.0036460622}
+      rotation: {x: -0.5908461, y: -0.19085239, z: 0.61854297, w: 0.48154005}
+      scale: {x: 0.9999999, y: 0.9999997, z: 0.9999998}
+    - name: Wing.L_end
+      parentName: Wing.L
+      position: {x: -0, y: 0.05012553, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Wing.R
+      parentName: WaspBody
+      position: {x: 0.005489977, y: 0.012107293, z: -0.0049957046}
+      rotation: {x: 0.61676806, y: -0.25147295, z: 0.5866453, w: -0.46065804}
+      scale: {x: 1, y: 0.99999994, z: 0.9999999}
+    - name: Wing.R_end
+      parentName: Wing.R
+      position: {x: -0, y: 0.05107573, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: MidLeg1.L
+      parentName: WaspBody
+      position: {x: -0.009470028, y: 0.0019837532, z: 0.004525474}
+      rotation: {x: 0.27312362, y: 0.52879053, z: 0.6804971, w: 0.42744341}
+      scale: {x: 0.99999976, y: 0.99999994, z: 1}
+    - name: MidLeg2.L
+      parentName: MidLeg1.L
+      position: {x: 5.9604643e-10, y: 0.01602729, z: 4.4703483e-10}
+      rotation: {x: 0.39315766, y: -0.4949171, z: 0.31655386, w: 0.70730317}
+      scale: {x: 1, y: 0.99999994, z: 1}
+    - name: MidLeg2.L_end
+      parentName: MidLeg2.L
+      position: {x: -0, y: 0.030250367, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: BackLeg1.L
+      parentName: WaspBody
+      position: {x: -0.008638107, y: -0.0068590576, z: -0.0006982822}
+      rotation: {x: 0.12785813, y: 0.31789595, z: 0.932035, w: 0.11792004}
+      scale: {x: 0.99999976, y: 0.99999994, z: 0.99999976}
+    - name: BackLeg2.L
+      parentName: BackLeg1.L
+      position: {x: -2.2351741e-10, y: 0.020568687, z: -1.6763806e-10}
+      rotation: {x: 0.1475173, y: -0.84001195, z: 0.07629842, w: 0.516524}
+      scale: {x: 1, y: 1, z: 1}
+    - name: BackLeg2.L_end
+      parentName: BackLeg2.L
+      position: {x: -0, y: 0.025783839, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: FrontLeg1.R
+      parentName: WaspBody
+      position: {x: 0.007933135, y: 0.012969164, z: 0.0038662457}
+      rotation: {x: 0.39701626, y: -0.28145763, z: -0.65459955, w: 0.57849735}
+      scale: {x: 1, y: 1.0000001, z: 1.0000001}
+    - name: FrontLeg2.R
+      parentName: FrontLeg1.R
+      position: {x: 0.0000000011920929, y: 0.016233705, z: -0.0000000015646219}
+      rotation: {x: 0.35446495, y: 0.010692929, z: -0.11603095, w: 0.92778075}
+      scale: {x: 1, y: 1.0000002, z: 1.0000001}
+    - name: FrontLeg2.R_end
+      parentName: FrontLeg2.R
+      position: {x: -0, y: 0.018472232, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: MidLeg1.R
+      parentName: WaspBody
+      position: {x: 0.008329443, y: 0.0028215407, z: 0.004518792}
+      rotation: {x: -0.20886306, y: 0.46380982, z: 0.722421, w: -0.46836376}
+      scale: {x: 0.99999994, y: 1, z: 0.99999994}
+    - name: MidLeg2.R
+      parentName: MidLeg1.R
+      position: {x: -0.0000000011920929, y: 0.017158473, z: -0.0000000012665987}
+      rotation: {x: 0.4257131, y: 0.5600035, z: -0.27116656, w: 0.6569879}
+      scale: {x: 1.0000001, y: 1, z: 1.0000002}
+    - name: MidLeg2.R_end
+      parentName: MidLeg2.R
+      position: {x: -0, y: 0.029424712, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: BackLeg1.R
+      parentName: WaspBody
+      position: {x: 0.009106233, y: -0.0065366826, z: -0.0014508745}
+      rotation: {x: -0.108492754, y: 0.29177248, z: 0.9288288, w: -0.20093592}
+      scale: {x: 0.9999999, y: 0.99999994, z: 0.99999994}
+    - name: BackLeg2.R
+      parentName: BackLeg1.R
+      position: {x: 4.0978193e-10, y: 0.020725073, z: -8.5681673e-10}
+      rotation: {x: 0.17847155, y: 0.8389904, z: -0.08358409, w: 0.50720495}
+      scale: {x: 0.9999999, y: 0.99999994, z: 0.99999994}
+    - name: BackLeg2.R_end
+      parentName: BackLeg2.R
+      position: {x: -0, y: 0.024472114, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: FrontLeg1.L
+      parentName: WaspBody
+      position: {x: -0.009102091, y: 0.013812214, z: 0.0057192207}
+      rotation: {x: 0.51962674, y: 0.34391302, z: 0.53140384, w: 0.5738657}
+      scale: {x: 1, y: 0.99999994, z: 1.0000001}
+    - name: FrontLeg2.L
+      parentName: FrontLeg1.L
+      position: {x: -3.72529e-10, y: 0.014991934, z: -4.4703483e-10}
+      rotation: {x: 0.44096088, y: 0.053931255, z: 0.13080294, w: 0.88630444}
+      scale: {x: 0.99999994, y: 1.0000002, z: 1}
+    - name: FrontLeg2.L_end
+      parentName: FrontLeg2.L
+      position: {x: -0, y: 0.01966542, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
     armTwist: 0.5
     foreArmTwist: 0.5
     upperLegTwist: 0.5
