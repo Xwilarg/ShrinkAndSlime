@@ -1,5 +1,3 @@
-using UnityEngine.AI;
-
 namespace LudumDare56.Enemy.Ground
 {
     public class Ant : AGroundEnemy
