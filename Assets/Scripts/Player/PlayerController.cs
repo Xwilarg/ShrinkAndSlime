@@ -90,18 +90,30 @@ namespace LudumDare56.Player
                     UpdateUI();
 
                     _lr.enabled = true;
-                    if (Physics.Raycast(_camHead.transform.position, _camHead.transform.forward, out var hit, 1000f, _attackLayer)
-                        && hit.collider.CompareTag("Monster"))
+                    if (Physics.Raycast(_camHead.transform.position, _camHead.transform.forward, out var hit, 1000f, _attackLayer))
                     {
-                        if (hit.collider.transform.parent.parent.TryGetComponent<IScalable>(out var sc) ||
-                            hit.collider.transform.parent.TryGetComponent(out sc))
+                        IScalable sc = null;
+                        if (hit.collider.CompareTag("Monster"))
+                        {
+                            hit.collider.transform.parent.parent.TryGetComponent(out sc);
+                            if (sc == null) hit.collider.transform.parent.TryGetComponent(out sc);
+                        }
+                        else if (hit.collider.CompareTag("Sheep"))
+                        {
+                            hit.collider.transform.TryGetComponent(out sc);
+                        }
+                        if (sc != null)
                         {
                             sc.ScaleProgression = Mathf.Clamp01(sc.ScaleProgression + Time.deltaTime);
                             var size = Mathf.Lerp(sc.BaseScale, sc.BaseScale * .1f, sc.ScaleProgression);
                             hit.collider.transform.localScale = Vector3.one * size;
                             _rayTarget = hit.point;
                         }
-                      
+                        else
+                        {
+                            _rayTarget = _camHead.transform.position + (_camHead.transform.forward * 1000f);
+                        }
+
                     }
                     else
                     {
