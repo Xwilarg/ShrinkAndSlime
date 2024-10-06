@@ -1,10 +1,12 @@
+using UnityEngine;
+
 namespace LudumDare56.Enemy.Ground
 {
     public class Ant : AGroundEnemy
     {
         protected override void Start()
         {
-            base.Awake();
+            base.Start();
 
             navMeshAgent.SetDestination(_targetNode.transform.position);
         }
