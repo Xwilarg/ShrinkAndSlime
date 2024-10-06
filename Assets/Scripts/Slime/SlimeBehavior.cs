@@ -57,11 +57,21 @@ namespace LudumDare56.Slime
         {
             if (_isfollowing)
             {
-                agent.SetDestination(playerPosition);
+             
 
                 if(Vector3.Distance(transform.position, playerPosition) > 50)
                 {
-                    transform.position = playerPosition; // teleport to the player if we're mega far!
+                    transform.position = playerPosition + Vector3.up; // teleport to the player if we're mega far!
+                    agent.enabled = false; // need to temporarily turn this off or the slime for some reason gets stuck in furniture
+                }
+                else
+                {
+                    if(!agent.enabled)
+                    {
+                        agent.enabled = true;
+                    }
+                   
+                    agent.SetDestination(playerPosition);
                 }
             }
             else
@@ -243,7 +253,15 @@ namespace LudumDare56.Slime
         {
             PlayerController.Instance.GainEnergy(15f);
 
-            Destroy(obj.GameObject.transform.parent.gameObject); // The enemy models are inside a parent, so we'll destroy the parent
+            if(obj.GameObject.transform.parent != null)
+            {
+                Destroy(obj.GameObject.transform.parent.gameObject); // The enemy models are inside a parent, so we'll destroy the parent
+            }
+            else
+            {
+                Destroy(obj.GameObject); // The enemy models are inside a parent, so we'll destroy the parent
+            }
+           
 
             _isfollowing = true; // follow the player again after we eat something!
 
@@ -263,6 +281,7 @@ namespace LudumDare56.Slime
             else
             {
                 transform.localScale = _targetScale;
+                _timeElapsed = 0;
                 _isGrowing = false;
             }
 
