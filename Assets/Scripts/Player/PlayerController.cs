@@ -91,6 +91,11 @@ namespace LudumDare56.Player
                             sc.ScaleProgression = Mathf.Clamp01(sc.ScaleProgression + Time.deltaTime);
                             var size = Mathf.Lerp(sc.BaseScale, sc.BaseScale * .1f, sc.ScaleProgression);
                             sc.GameObject.transform.localScale = Vector3.one * size;
+                            if(sc.Agent != null) // if we have a navmeshagent on this enemy we need to shrink the radius too! - Gen
+                            {
+                                var radiusSize = Mathf.Lerp(sc.Agent.radius, sc.Agent.radius * .1f, sc.ScaleProgression);
+                                sc.Agent.radius = radiusSize;
+                            }
                             _rayTarget = hit.point;
                         }
                         else

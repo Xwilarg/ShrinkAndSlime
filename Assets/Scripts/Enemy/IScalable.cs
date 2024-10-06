@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.AI;
 
 namespace LudumDare56.Enemy
 {
@@ -7,5 +8,7 @@ namespace LudumDare56.Enemy
         public GameObject GameObject { get; }
         public float BaseScale { get; }
         public float ScaleProgression { set; get; }
+
+        public abstract NavMeshAgent Agent { get; } 
     }
 }
