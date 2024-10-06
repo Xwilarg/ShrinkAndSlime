@@ -1,5 +1,6 @@
 ﻿using LudumDare56.Enemy;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace LudumDare56.Map
 {
@@ -11,9 +12,12 @@ namespace LudumDare56.Map
 
         public float ScaleProgression { get; set; }
 
+        public NavMeshAgent Agent { private set; get; }
+
         private void Awake()
         {
             BaseScale = transform.localScale.x;
+            Agent = GetComponent<NavMeshAgent>();
         }
     }
 }

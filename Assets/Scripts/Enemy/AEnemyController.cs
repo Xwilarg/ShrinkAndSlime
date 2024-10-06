@@ -1,6 +1,8 @@
+using LudumDare56.Enemy.Ground;
 using LudumDare56.Manager;
 using LudumDare56.Map;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace LudumDare56.Enemy
 {
@@ -29,11 +31,14 @@ namespace LudumDare56.Enemy
 
         public float BaseScale { private set; get; }
 
+        public NavMeshAgent Agent { private set; get; }
+
         public float ScaleProgression { set; get; }
 
         protected virtual void Awake()
         {
             BaseScale = _model.localScale.x;
+            Agent = GetComponent<NavMeshAgent>();
 
             var d = GetComponentInChildren<Detector>();
             d.OnTriggerEnterEvt.AddListener((c) =>

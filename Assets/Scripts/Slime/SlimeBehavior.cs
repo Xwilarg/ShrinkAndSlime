@@ -36,6 +36,8 @@ namespace LudumDare56.Slime
 
         private bool _isCheckingClicks = false;
 
+        private Vector3 playerPosition => PlayerController.Instance.transform.position;
+
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
@@ -54,7 +56,12 @@ namespace LudumDare56.Slime
         {
             if (_isfollowing)
             {
-                agent.SetDestination(PlayerController.Instance.transform.position);
+                agent.SetDestination(playerPosition);
+
+                if(Vector3.Distance(transform.position, playerPosition) > 50)
+                {
+                    transform.position = playerPosition; // teleport to the player if we're mega far!
+                }
             }
             else
             {
@@ -172,9 +179,12 @@ namespace LudumDare56.Slime
 
         public void CheckForEdibleObjects(GameObject obj)
         {
-            var isc = GetMeshRenderer(obj);
+            var isc = GetScalable(obj);
             var meshRenderer = isc.GameObject.GetComponentInChildren<MeshRenderer>();
-            if (meshRenderer)
+            var skinnedMeshRenderer = isc.GameObject.GetComponentInChildren<SkinnedMeshRenderer>();
+            
+
+            if (meshRenderer != null)
             {
                 if (IsSlimeBigger(meshRenderer.bounds.size))
                 {
@@ -188,22 +198,41 @@ namespace LudumDare56.Slime
                     }
                 }
             }
+            else if ( skinnedMeshRenderer != null) //todo: probably clean this up haha
+            {
+                if (IsSlimeBigger(skinnedMeshRenderer.bounds.size))
+                {
+                    if (Vector3.Distance(transform.position, obj.transform.position) < 3.5) // if we're close, go for it!
+                    {
+                        EatObject(isc);
+                    }
+                    else// if not, follow the object!
+                    {
+                        agent.SetDestination(obj.transform.position);
+                    }
+                }
+            }
         }
 
-        private IScalable GetMeshRenderer(GameObject obj) // helper func because the meshrenderer could be on a sibling object
+        private IScalable GetScalable(GameObject obj) // helper func because the meshrenderer could be on a sibling object
         {
-            var meshRenderer = obj.GetComponent<IScalable>();
-
-            if (meshRenderer != null)
+            if(obj.tag == "Bullet")
             {
-                return meshRenderer;
+                return null; // we should NOT be trying to eat the bullets omg
             }
 
-            var siblingMeshRenderer = obj.transform.parent.GetComponentInChildren<IScalable>(); 
+            var scalableObj = obj.GetComponent<IScalable>();
 
-            if(siblingMeshRenderer != null)
+            if (scalableObj != null)
             {
-                return siblingMeshRenderer;
+                return scalableObj;
+            }
+
+            var siblingScalableObj = obj.transform.parent.GetComponentInChildren<IScalable>(); 
+
+            if(siblingScalableObj != null)
+            {
+                return siblingScalableObj;
             }
 
             return null;
@@ -213,7 +242,7 @@ namespace LudumDare56.Slime
         {
             PlayerController.Instance.GainEnergy(15f);
 
-            Destroy(obj.GameObject); // The enemy models are usually inside a parent, so we'll destroy the parent
+            Destroy(obj.GameObject.transform.parent.gameObject); // The enemy models are inside a parent, so we'll destroy the parent
 
             _isfollowing = true; // follow the player again after we eat something!
 
