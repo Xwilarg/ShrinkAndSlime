@@ -96,7 +96,7 @@ namespace LudumDare56.Player
                         {
                             sc.ScaleProgression = Mathf.Clamp01(sc.ScaleProgression + Time.deltaTime);
                             var size = Mathf.Lerp(sc.BaseScale, sc.BaseScale * .1f, sc.ScaleProgression);
-                            hit.collider.transform.localScale = Vector3.one * size;
+                            sc.GameObject.transform.localScale = Vector3.one * size;
                             _rayTarget = hit.point;
                         }
                         else
