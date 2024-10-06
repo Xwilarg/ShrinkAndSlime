@@ -175,7 +175,7 @@ namespace LudumDare56.Player
         {
             if (_healthUI.childCount > 0)
             {
-                Destroy(_healthUI.GetChild(_healthUI.childCount - 1));
+                Destroy(_healthUI.GetChild(_healthUI.childCount - 1).gameObject);
                 StartCoroutine(TakeDamageInvul());
             }
             else
