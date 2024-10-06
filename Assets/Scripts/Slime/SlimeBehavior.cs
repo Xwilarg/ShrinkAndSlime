@@ -1,4 +1,5 @@
 using LudumDare56.Enemy;
+using LudumDare56.Manager;
 using LudumDare56.Player;
 using System.Collections;
 using UnityEngine;
@@ -92,7 +93,7 @@ namespace LudumDare56.Slime
 
         public void DirectSlime(InputAction.CallbackContext context)
         {
-            if (context.canceled) // if we RELEASED the mouse button
+            if (context.canceled && GameManager.Instance.CanPlay) // if we RELEASED the mouse button
             {
                 // remembering WHERE we clicked
                 Ray ray = _cam.ScreenPointToRay(Input.mousePosition);

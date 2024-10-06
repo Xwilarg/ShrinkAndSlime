@@ -1,4 +1,5 @@
 using LudumDare56.Enemy;
+using LudumDare56.Manager;
 using LudumDare56.SO;
 using TMPro;
 using Unity.Cinemachine;
@@ -47,8 +48,6 @@ namespace LudumDare56.Player
 
         private Vector3? _rayTarget;
 
-        private bool CanMove => true;
-
         private void Awake()
         {
             Instance = this;
@@ -76,12 +75,7 @@ namespace LudumDare56.Player
 
         private void FixedUpdate()
         {
-            if (!CanMove)
-            {
-                return;
-            }
-
-            if (_isShooting)
+            if (_isShooting && GameManager.Instance.CanPlay)
             {
                 if (_energyAmount > 0f)
                 {
@@ -128,7 +122,7 @@ namespace LudumDare56.Player
 
             _camHead.transform.eulerAngles = new(_camHead.VerticalAxis.Value, _camHead.HorizontalAxis.Value, 0f);
 
-            var pos = _mov;
+            var pos = GameManager.Instance.CanPlay ? _mov : Vector2.zero;
             Vector3 desiredMove = _cam.transform.forward * pos.y + _cam.transform.right * pos.x;
             _model.transform.LookAt(transform.position + _cam.transform.forward, Vector3.up);
             _model.transform.rotation = Quaternion.Euler(0f, _model.transform.rotation.eulerAngles.y, 0f);
@@ -178,7 +172,7 @@ namespace LudumDare56.Player
 
         public void OnJump(InputAction.CallbackContext value)
         {
-            if (_controller.isGrounded && value.phase == InputActionPhase.Started)
+            if (GameManager.Instance.CanPlay && _controller.isGrounded && value.phase == InputActionPhase.Started)
             {
                 _verticalSpeed = _info.JumpForce;
             }
@@ -191,7 +185,7 @@ namespace LudumDare56.Player
 
         public void OnAttack(InputAction.CallbackContext value)
         {
-            if (value.phase == InputActionPhase.Started)
+            if (value.phase == InputActionPhase.Started && GameManager.Instance.CanPlay)
             {
                 _isShooting = true;
             }
