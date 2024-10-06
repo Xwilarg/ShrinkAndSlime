@@ -341,7 +341,7 @@ Transform:
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -17.9, y: 1.76, z: -1.7999992}
+  m_LocalPosition: {x: -21.9, y: 1.76, z: -61.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1064,7 +1064,8 @@ GameObject:
   - component: {fileID: 971348574}
   - component: {fileID: 971348575}
   - component: {fileID: 971348576}
-  m_Layer: 0
+  - component: {fileID: 971348577}
+  m_Layer: 8
   m_Name: FyingEnemy
   m_TagString: Monster
   m_Icon: {fileID: 0}
@@ -1131,6 +1132,27 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
+--- !u!135 &971348577
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 971348573}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 3.96
+  m_Center: {x: 0, y: 3.48, z: -2.02}
 --- !u!1001 &1077990258
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1199,13 +1221,18 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Monster
       objectReference: {fileID: 0}
+    - target: {fileID: 8829414129297429972, guid: 01519669e43f01842a9202e8293675df, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8829414129297429972, guid: 01519669e43f01842a9202e8293675df, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 01519669e43f01842a9202e8293675df, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1763948981}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 01519669e43f01842a9202e8293675df, type: 3}
 --- !u!4 &1077990259 stripped
 Transform:
@@ -1573,7 +1600,7 @@ GameObject:
   - component: {fileID: 1584985128}
   - component: {fileID: 1584985129}
   - component: {fileID: 1584985130}
-  m_Layer: 8
+  m_Layer: 13
   m_Name: AreaDetector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1994,33 +2021,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1750345345}
   m_CullTransparentMesh: 1
---- !u!1 &1763948978 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 01519669e43f01842a9202e8293675df, type: 3}
-  m_PrefabInstance: {fileID: 1077990258}
-  m_PrefabAsset: {fileID: 0}
---- !u!64 &1763948981
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1763948978}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 1777747526001728494, guid: 01519669e43f01842a9202e8293675df, type: 3}
 --- !u!4 &1770380487 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1559869572143719566, guid: 1a0e9dd8055b9ff41b0a8264563cf842, type: 3}
@@ -2438,7 +2438,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5373368919900887217, guid: 420b55e772e8c504fbfc3733ffbd3b90, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -17.9
+      value: -21.9
       objectReference: {fileID: 0}
     - target: {fileID: 5373368919900887217, guid: 420b55e772e8c504fbfc3733ffbd3b90, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2446,7 +2446,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5373368919900887217, guid: 420b55e772e8c504fbfc3733ffbd3b90, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.7999992
+      value: -61.8
       objectReference: {fileID: 0}
     - target: {fileID: 5373368919900887217, guid: 420b55e772e8c504fbfc3733ffbd3b90, type: 3}
       propertyPath: m_LocalRotation.w
