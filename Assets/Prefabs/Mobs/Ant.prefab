@@ -41,6 +41,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2697338683273400870}
+  - component: {fileID: 2934176690626823945}
   m_Layer: 0
   m_Name: AreaDetector
   m_TagString: Untagged
@@ -63,6 +64,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 8854100302714053571}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2934176690626823945
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6649661983472256294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0387642baa34b534b8673752ab66bf01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7426691359805203868
 GameObject:
   m_ObjectHideFlags: 0
@@ -132,9 +145,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 614acb8c9e4b82944813f5de8eb4b604, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _modelContainer: {fileID: 0}
-  _model: {fileID: 0}
-  target: {fileID: 0}
+  _modelContainer: {fileID: 9163218130609162486}
+  _model: {fileID: 4854630679408684023}
+  _animator: {fileID: 3889080074515823931}
 --- !u!1001 &4960052657128688668
 PrefabInstance:
   m_ObjectHideFlags: 0
