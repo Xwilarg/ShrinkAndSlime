@@ -1,3 +1,4 @@
+using LudumDare56.Enemy;
 using LudumDare56.Player;
 using System.Collections;
 using UnityEngine;
@@ -171,14 +172,15 @@ namespace LudumDare56.Slime
 
         public void CheckForEdibleObjects(GameObject obj)
         {
-            var meshRenderer = GetMeshRenderer(obj);
+            var isc = GetMeshRenderer(obj);
+            var meshRenderer = isc.GameObject.GetComponentInChildren<MeshRenderer>();
             if (meshRenderer)
             {
                 if (IsSlimeBigger(meshRenderer.bounds.size))
                 {
                     if (Vector3.Distance(transform.position, obj.transform.position) < 3.5) // if we're close, go for it!
                     {
-                        EatObject(obj);
+                        EatObject(isc);
                     }
                     else// if not, follow the object!
                     {
@@ -188,29 +190,30 @@ namespace LudumDare56.Slime
             }
         }
 
-        private MeshRenderer GetMeshRenderer(GameObject obj) // helper func because the meshrenderer could be on a sibling object
+        private IScalable GetMeshRenderer(GameObject obj) // helper func because the meshrenderer could be on a sibling object
         {
-            var siblingMeshRenderer = obj.transform.parent.GetComponentInChildren<MeshRenderer>(); 
-            var meshRenderer = obj.GetComponent<MeshRenderer>();
+            var meshRenderer = obj.GetComponent<IScalable>();
 
-            if(siblingMeshRenderer)
+            if (meshRenderer != null)
             {
-                return siblingMeshRenderer;
+                return meshRenderer;
             }
 
-            if (meshRenderer)
+            var siblingMeshRenderer = obj.transform.parent.GetComponentInChildren<IScalable>(); 
+
+            if(siblingMeshRenderer != null)
             {
-                return meshRenderer;    
+                return siblingMeshRenderer;
             }
 
             return null;
         }
 
-        private void EatObject(GameObject obj)
+        private void EatObject(IScalable obj)
         {
             PlayerController.Instance.GainEnergy(15f);
 
-            Destroy(obj.transform.parent.gameObject); // The enemy models are usually inside a parent, so we'll destroy the parent
+            Destroy(obj.GameObject); // The enemy models are usually inside a parent, so we'll destroy the parent
 
             _isfollowing = true; // follow the player again after we eat something!
 

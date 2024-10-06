@@ -57,7 +57,7 @@ namespace LudumDare56.Player
 
             Cursor.lockState = CursorLockMode.Locked;
 
-            _attackLayer = LayerMask.GetMask("Map", "Monster");
+            _attackLayer = LayerMask.GetMask("Map", "Monster", "Sheep");
 
             _cam = Camera.main;
 
