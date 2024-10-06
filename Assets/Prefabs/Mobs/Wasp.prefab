@@ -40,6 +40,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2917158225126190528}
+  - component: {fileID: 6126300134594274768}
   m_Layer: 0
   m_Name: Wasp
   m_TagString: Untagged
@@ -64,6 +65,18 @@ Transform:
   - {fileID: 1740127895210639745}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6126300134594274768
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4220456840545215509}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d7933aab1f179c41a9eb4fe567aac6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8864603546269930517
 GameObject:
   m_ObjectHideFlags: 0
@@ -110,7 +123,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 01519669e43f01842a9202e8293675df, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 11.76
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 01519669e43f01842a9202e8293675df, type: 3}
       propertyPath: m_LocalPosition.z

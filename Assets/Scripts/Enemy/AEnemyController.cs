@@ -19,6 +19,12 @@ namespace LudumDare56.Enemy
         /// </summary>
         protected GameObject _fightingTarget;
 
+        /// <summary>
+        /// Animator base, conditions called in specific enemy classes
+        /// </summary>
+        [SerializeField]
+        protected Animator _animator;
+
         public GameObject GameObject => _modelContainer.gameObject;
 
         public float BaseScale { private set; get; }

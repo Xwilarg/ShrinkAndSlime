@@ -7,8 +7,6 @@ namespace LudumDare56.Enemy
     {
         NavMeshAgent navMeshAgent;
 
-        public GameObject target;
-
         protected override void Awake()
 
         {
@@ -18,8 +16,12 @@ namespace LudumDare56.Enemy
 
         private void Update()
         {
-            if (target != null)
-                navMeshAgent.SetDestination(target.transform.position);
+            if (_fightingTarget != null)
+            {
+                navMeshAgent.SetDestination(_fightingTarget.transform.position);
+                _animator.SetBool("IsMoving", true);
+            }
+                
         }
     }
 }
