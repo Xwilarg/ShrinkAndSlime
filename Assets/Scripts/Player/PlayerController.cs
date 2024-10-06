@@ -156,6 +156,14 @@ namespace LudumDare56.Player
             _controller.Move(moveDir);
         }
 
+        public void GainEnergy(float amount)
+        {
+            _energyAmount += amount;
+            if (_energyAmount > 100f) _energyAmount = 100f;
+
+            UpdateUI();
+        }
+
         private void UpdateUI()
         {
             _energyText.text = $"{_energyAmount:0}%";

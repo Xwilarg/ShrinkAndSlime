@@ -208,6 +208,7 @@ namespace LudumDare56.Slime
 
         private void EatObject(GameObject obj)
         {
+            PlayerController.Instance.GainEnergy(15f);
 
             Destroy(obj.transform.parent.gameObject); // The enemy models are usually inside a parent, so we'll destroy the parent
 
