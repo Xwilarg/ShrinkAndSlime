@@ -184,6 +184,7 @@ namespace LudumDare56.Player
             else
             {
                 GameManager.Instance.CanPlay = false;
+                Cursor.lockState = CursorLockMode.None;
                 _gameOver.SetActive(true);
             }
         }
