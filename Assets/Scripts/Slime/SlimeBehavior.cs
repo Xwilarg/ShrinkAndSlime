@@ -11,7 +11,7 @@ namespace LudumDare56.Slime
     public class SlimeBehavior : MonoBehaviour
     {
         private bool _isfollowing = true; // following Player by default
-        [SerializeField] private float _maxDistFromPlayer = 15; 
+        [SerializeField] private float _maxDistFromPlayer = 25; 
         [SerializeField] private float _growMultiplier = 1.5f;
         [SerializeField] private float _lerpDuration = 2f; // how long it takes to grow into the new size
         [SerializeField] private Animator _handAnimator; // we are setting off triggers based on what we command the slime!
@@ -23,7 +23,6 @@ namespace LudumDare56.Slime
         private Camera _cam;
         [SerializeField]
         private SkinnedMeshRenderer _renderer;
-        private Vector3 _slimeSize;
 
         private GameObject _monsterToEat;
 
@@ -38,6 +37,8 @@ namespace LudumDare56.Slime
         private float _clickDelay = 0.3f;
 
         private bool _isCheckingClicks = false;
+        private float _dist_multiplier = 0f;
+        private float _max_dist_from_enemy = 3f;
 
         private Vector3 playerPosition => PlayerController.Instance.transform.position;
 
@@ -47,7 +48,6 @@ namespace LudumDare56.Slime
             agent = GetComponent<NavMeshAgent>();
             _anim = GetComponentInChildren<Animator>();
             _cam = Camera.main;
-            _slimeSize = _renderer.bounds.size;
 
             if(_handAnimator)
             {
@@ -62,9 +62,12 @@ namespace LudumDare56.Slime
 
             if (_isfollowing)
             {
-                if(Vector3.Distance(transform.position, playerPosition) > 50)
+             
+                //Teleporting stuff
+                if(Vector3.Distance(transform.position, playerPosition) > _maxDistFromPlayer)
                 {
-                    transform.position = playerPosition + Vector3.up; // teleport to the player if we're mega far!
+                    Vector3 newPos = new Vector3(playerPosition.x, playerPosition.y+1, playerPosition.z - 2f);
+                    transform.position = newPos;
                     agent.enabled = false; // need to temporarily turn this off or the slime for some reason gets stuck in furniture
                 }
                 else
@@ -83,24 +86,12 @@ namespace LudumDare56.Slime
                 //if we have a target AND we are close to the target
                 if (Vector3.Distance(transform.position, _targetDestination) < 3.5)
                 {
-                    //TODO: Maybe check for nearby creatures to eat?
                     if (_monsterToEat)
                     {
                         CheckForEdibleObjects(_monsterToEat);
                         _monsterToEat = null;
                     }
 
-                    //Stay there if there's no monster to eat
-                }
-                else //else try to get back to the player if we're too far!
-                {
-
-                    var dist = Vector3.Distance(transform.position, playerPosition);
-                    if (dist > _maxDistFromPlayer)
-                    {
-                        _isfollowing = true;
-                        agent.stoppingDistance = 5f;
-                    }
                 }
             }
 
@@ -204,13 +195,17 @@ namespace LudumDare56.Slime
             {
                 if (IsSlimeBigger(meshRenderer.bounds.size))
                 {
-                    if (Vector3.Distance(transform.position, obj.transform.position) < 3.5) // if we're close, go for it!
+                    if (Vector3.Distance(transform.position, obj.transform.position) < _max_dist_from_enemy) // if we're close, go for it!
                     {
                         EatObject(isc);
                     }
                     else// if not, follow the object!
                     {
-                        agent.SetDestination(obj.transform.position);
+                        if(agent.enabled) // can't follow objects not on the nav mesh
+                        {
+                            agent.SetDestination(obj.transform.position);
+                        }
+                        
                     }
                 }
             }
@@ -218,15 +213,22 @@ namespace LudumDare56.Slime
             {
                 if (IsSlimeBigger(skinnedMeshRenderer.bounds.size))
                 {
-                    if (Vector3.Distance(transform.position, obj.transform.position) < 3.5) // if we're close, go for it!
+                    if (Vector3.Distance(transform.position, obj.transform.position) < _max_dist_from_enemy) // if we're close, go for it!
                     {
                         EatObject(isc);
                     }
                     else// if not, follow the object!
                     {
-                        agent.SetDestination(obj.transform.position);
+                        if (agent.enabled) // can't follow objects not on the nav mesh
+                        {
+                            agent.SetDestination(obj.transform.position);
+                        }
                     }
                 }
+            }
+            else
+            {
+                _isfollowing = true;
             }
         }
 
@@ -256,7 +258,6 @@ namespace LudumDare56.Slime
 
         private void EatObject(IScalable obj)
         {
-            PlayerController.Instance.GainEnergy(15f);
 
             if (obj.GameObject.CompareTag("Boss"))
             {
@@ -264,17 +265,14 @@ namespace LudumDare56.Slime
                 _outroComic.SetActive(true);
             }
 
-            if (obj.GameObject.CompareTag("Sheep"))
-            {
-                Destroy(obj.GameObject);
-            }
-            else if(obj.GameObject.transform.parent != null)
+
+            if(obj.GameObject.transform.parent != null && obj.GameObject.name.ToLower().Equals("model")) // we want to destroy the object holding the model! 
             {
                 Destroy(obj.GameObject.transform.parent.gameObject); // The enemy models are inside a parent, so we'll destroy the parent
             }
             else
             {
-                Destroy(obj.GameObject); // The enemy models are inside a parent, so we'll destroy the parent
+                Destroy(obj.GameObject); // if it's not being contained, just destory the object
             }
            
 
@@ -282,14 +280,16 @@ namespace LudumDare56.Slime
 
             _targetScale = transform.localScale * _growMultiplier;
             _startScale = transform.localScale;
-            agent.stoppingDistance += 0.5f; //increase distance from the player because the bigger the slime the closer they are haha
+            _dist_multiplier += 1.5f;
+            _max_dist_from_enemy += 0.75f;
+            _maxDistFromPlayer += 0.25f;
+            agent.stoppingDistance += (3+ _dist_multiplier); //increase distance from the player because the bigger the slime the closer they are haha
             _isGrowing = true;
         }
 
         private void Grow()
         {
-
-            if(_timeElapsed < _lerpDuration)
+            if (_timeElapsed < _lerpDuration)
             {
                 transform.localScale = Vector3.Lerp(_startScale, _targetScale, _timeElapsed/_lerpDuration); // keep growing!
                 _timeElapsed += Time.deltaTime;
@@ -301,11 +301,14 @@ namespace LudumDare56.Slime
                 _isGrowing = false;
             }
 
+        
+
 
         }
 
         private bool IsSlimeBigger(Vector3 objectSize)
-        { 
+        {
+            var _slimeSize = _renderer.bounds.size;
             //storing slime vars
             var slime_width = _slimeSize.x;
             var slime_height = _slimeSize.y;
