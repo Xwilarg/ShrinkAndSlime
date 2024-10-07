@@ -1,5 +1,7 @@
 using LudumDare56.Enemy;
+using LudumDare56.Manager;
 using LudumDare56.SO;
+using System.Collections;
 using TMPro;
 using Unity.Cinemachine;
 using UnityEngine;
@@ -30,6 +32,12 @@ namespace LudumDare56.Player
         [SerializeField]
         private Transform _gunEnd;
 
+        [SerializeField]
+        private Transform _healthUI;
+
+        [SerializeField]
+        private GameObject _gameOver;
+
         private CharacterController _controller;
         private Vector2 _mov;
         private bool _isSprinting;
@@ -45,7 +53,9 @@ namespace LudumDare56.Player
 
         private LineRenderer _lr;
 
-        private bool CanMove => true;
+        private Vector3? _rayTarget;
+
+        private bool _canTakeDamage = true;
 
         private void Awake()
         {
@@ -55,7 +65,7 @@ namespace LudumDare56.Player
 
             Cursor.lockState = CursorLockMode.Locked;
 
-            _attackLayer = LayerMask.GetMask("Map", "Monster");
+            _attackLayer = LayerMask.GetMask("Map", "Monster", "Sheep");
 
             _cam = Camera.main;
 
@@ -64,14 +74,17 @@ namespace LudumDare56.Player
             UpdateUI();
         }
 
+        private void Update()
+        {
+            if (_rayTarget != null)
+            {
+                _lr.SetPositions(new[] { _gunEnd.transform.position, _rayTarget.Value });
+            }
+        }
+
         private void FixedUpdate()
         {
-            if (!CanMove)
-            {
-                return;
-            }
-
-            if (_isShooting)
+            if (_isShooting && GameManager.Instance.CanPlay)
             {
                 if (_energyAmount > 0f)
                 {
@@ -80,16 +93,29 @@ namespace LudumDare56.Player
                     UpdateUI();
 
                     _lr.enabled = true;
-                    if (Physics.Raycast(_camHead.transform.position, _camHead.transform.forward, out var hit, 1000f, _attackLayer) && hit.collider.transform.parent.TryGetComponent<IScalable>(out var sc))
+                    if (Physics.Raycast(_camHead.transform.position, _camHead.transform.forward, out var hit, 1000f, _attackLayer))
                     {
-                        sc.ScaleProgression = Mathf.Clamp01(sc.ScaleProgression + Time.deltaTime);
-                        var size = Mathf.Lerp(sc.BaseScale, sc.BaseScale * .1f, sc.ScaleProgression);
-                        hit.collider.transform.localScale = Vector3.one * size;
-                        _lr.SetPositions(new[] { _gunEnd.transform.position, hit.point });
+                        if (hit.collider.transform.TryGetComponent<IScalable>(out var sc))
+                        {
+                            sc.ScaleProgression = Mathf.Clamp01(sc.ScaleProgression + Time.deltaTime);
+                            var size = Mathf.Lerp(sc.BaseScale, sc.BaseScale * .1f, sc.ScaleProgression);
+                            sc.GameObject.transform.localScale = Vector3.one * size;
+                            if(sc.Agent != null) // if we have a navmeshagent on this enemy we need to shrink the radius too! - Gen
+                            {
+                                var radiusSize = Mathf.Lerp(sc.Agent.radius, sc.Agent.radius * .1f, sc.ScaleProgression);
+                                sc.Agent.radius = radiusSize;
+                            }
+                            _rayTarget = hit.point;
+                        }
+                        else
+                        {
+                            _rayTarget = _camHead.transform.position + (_camHead.transform.forward * 1000f);
+                        }
+
                     }
                     else
                     {
-                        _lr.SetPositions(new[] { _gunEnd.transform.position, _camHead.transform.position + (_camHead.transform.forward * 1000f) });
+                        _rayTarget = _camHead.transform.position + (_camHead.transform.forward * 1000f);
                     }
 
                     _reticle.color = Color.blue;
@@ -98,17 +124,19 @@ namespace LudumDare56.Player
                 {
                     _reticle.color = Color.red;
                     _lr.enabled = false;
+                    _rayTarget = null;
                 }
             }
             else
             {
                 _reticle.color = Color.black;
                 _lr.enabled = false;
+                _rayTarget = null;
             }
 
             _camHead.transform.eulerAngles = new(_camHead.VerticalAxis.Value, _camHead.HorizontalAxis.Value, 0f);
 
-            var pos = _mov;
+            var pos = GameManager.Instance.CanPlay ? _mov : Vector2.zero;
             Vector3 desiredMove = _cam.transform.forward * pos.y + _cam.transform.right * pos.x;
             _model.transform.LookAt(transform.position + _cam.transform.forward, Vector3.up);
             _model.transform.rotation = Quaternion.Euler(0f, _model.transform.rotation.eulerAngles.y, 0f);
@@ -138,6 +166,36 @@ namespace LudumDare56.Player
             _controller.Move(moveDir);
         }
 
+        public void GainEnergy(float amount)
+        {
+            _energyAmount += amount;
+            if (_energyAmount > 100f) _energyAmount = 100f;
+
+            UpdateUI();
+        }
+
+        public void TakeDamage()
+        {
+            if (_healthUI.childCount > 0)
+            {
+                Destroy(_healthUI.GetChild(_healthUI.childCount - 1).gameObject);
+                StartCoroutine(TakeDamageInvul());
+            }
+            else
+            {
+                GameManager.Instance.CanPlay = false;
+                Cursor.lockState = CursorLockMode.None;
+                _gameOver.SetActive(true);
+            }
+        }
+
+        private IEnumerator TakeDamageInvul()
+        {
+            _canTakeDamage = false;
+            yield return new WaitForSeconds(1f);
+            _canTakeDamage = true;
+        }
+
         private void UpdateUI()
         {
             _energyText.text = $"{_energyAmount:0}%";
@@ -150,7 +208,7 @@ namespace LudumDare56.Player
 
         public void OnJump(InputAction.CallbackContext value)
         {
-            if (_controller.isGrounded && value.phase == InputActionPhase.Started)
+            if (GameManager.Instance.CanPlay && _controller.isGrounded && value.phase == InputActionPhase.Started)
             {
                 _verticalSpeed = _info.JumpForce;
             }
@@ -163,7 +221,7 @@ namespace LudumDare56.Player
 
         public void OnAttack(InputAction.CallbackContext value)
         {
-            if (value.phase == InputActionPhase.Started)
+            if (value.phase == InputActionPhase.Started && GameManager.Instance.CanPlay)
             {
                 _isShooting = true;
             }

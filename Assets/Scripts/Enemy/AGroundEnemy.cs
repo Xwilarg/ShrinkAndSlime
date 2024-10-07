@@ -1,3 +1,4 @@
+using LudumDare56.Player;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -5,21 +6,20 @@ namespace LudumDare56.Enemy
 {
     public abstract class AGroundEnemy : AEnemyController
     {
-        NavMeshAgent navMeshAgent;
-
-        public GameObject target;
+        protected NavMeshAgent navMeshAgent;
 
         protected override void Awake()
-
         {
             base.Awake();
-            navMeshAgent = GetComponent<NavMeshAgent>();
+            navMeshAgent = GetComponentInChildren<NavMeshAgent>();
         }
 
-        private void Update()
+        private void OnCollisionEnter(Collision collision)
         {
-            if (target != null)
-                navMeshAgent.SetDestination(target.transform.position);
+            if (collision.collider.TryGetComponent<PlayerController>(out var pc))
+            {
+                pc.TakeDamage();
+            }
         }
     }
 }
