@@ -822,6 +822,7 @@ PlayerSettings:
   webWasm2023: 0
   scriptingDefineSymbols:
     Standalone: INK_RUNTIME;INK_EDITOR
+    WebGL: INK_RUNTIME;INK_EDITOR
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend:
