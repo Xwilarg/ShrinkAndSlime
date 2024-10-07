@@ -62,7 +62,7 @@ namespace LudumDare56.Enemy.Flying
 
                 if (_canShoot)
                 {
-                    var go = Instantiate(_projectilePrefab, _gunEnd);
+                    var go = Instantiate(_projectilePrefab, _gunEnd.position, Quaternion.identity);
                     go.GetComponent<Rigidbody>().linearVelocity = ((PlayerController.Instance.transform.position + Vector3.up) - transform.position).normalized * 20f;
                     StartCoroutine(Reload());
                 }
