@@ -1,0 +1,10 @@
+{
+	"Version": 3,
+	"FileReferences": {
+		"Moc": "Comic-Page 3.moc3",
+		"Textures": [
+			"Comic-Page 3.4096/texture_00.png"
+		],
+		"DisplayInfo": "Comic-Page 3.cdi3.json"
+	}
+}
