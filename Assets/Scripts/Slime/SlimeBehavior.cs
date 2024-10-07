@@ -15,6 +15,7 @@ namespace LudumDare56.Slime
         [SerializeField] private float _growMultiplier = 1.5f;
         [SerializeField] private float _lerpDuration = 2f; // how long it takes to grow into the new size
         [SerializeField] private Animator _handAnimator; // we are setting off triggers based on what we command the slime!
+        [SerializeField] private GameObject _outroComic;
         private Animator _anim;
 
         private NavMeshAgent agent;
@@ -255,6 +256,12 @@ namespace LudumDare56.Slime
         private void EatObject(IScalable obj)
         {
             PlayerController.Instance.GainEnergy(15f);
+
+            if (obj.GameObject.CompareTag("Boss"))
+            {
+                GameManager.Instance.CanPlay = false;
+                _outroComic.SetActive(true);
+            }
 
             if (obj.GameObject.CompareTag("Sheep"))
             {

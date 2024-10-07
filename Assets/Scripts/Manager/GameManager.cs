@@ -27,5 +27,10 @@ namespace LudumDare56.Manager
         {
             SceneManager.LoadScene("Main");
         }
+
+        public void Menu()
+        {
+            SceneManager.LoadScene("Menu");
+        }
     }
 }
