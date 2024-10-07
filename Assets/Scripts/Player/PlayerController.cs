@@ -38,6 +38,9 @@ namespace LudumDare56.Player
         [SerializeField]
         private GameObject _gameOver;
 
+        [SerializeField]
+        private GameObject _hurtScreen;
+
         private CharacterController _controller;
         private Vector2 _mov;
         private bool _isSprinting;
@@ -199,7 +202,10 @@ namespace LudumDare56.Player
         private IEnumerator TakeDamageInvul()
         {
             _canTakeDamage = false;
-            yield return new WaitForSeconds(1f);
+            _hurtScreen.SetActive(true);
+            yield return new WaitForSeconds(.5f);
+            _hurtScreen.SetActive(false);
+            yield return new WaitForSeconds(.5f);
             _canTakeDamage = true;
         }
 
