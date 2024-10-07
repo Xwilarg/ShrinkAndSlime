@@ -99,6 +99,7 @@ namespace LudumDare56.Slime
                     if (dist > _maxDistFromPlayer)
                     {
                         _isfollowing = true;
+                        agent.stoppingDistance = 5f;
                     }
                 }
             }

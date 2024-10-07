@@ -1,4 +1,3 @@
-using LudumDare56.Manager;
 using LudumDare56.Map;
 using System.Linq;
 using UnityEngine;
