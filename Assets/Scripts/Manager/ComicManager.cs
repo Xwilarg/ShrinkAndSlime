@@ -14,13 +14,20 @@ namespace LudumDare56.Manager
 
         private bool _needIncr = false;
 
+        int _nb = 1;
+
         private void Update()
         {
             if (_needIncr)
             {
-                _param.Value += 1;
+                _nb++;
                 _needIncr = false;
             }
+        }
+
+        private void LateUpdate()
+        {
+            _param.Value = _nb;
         }
 
         public void OnNext(InputAction.CallbackContext value)
