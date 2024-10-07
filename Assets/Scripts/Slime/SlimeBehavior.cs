@@ -11,7 +11,7 @@ namespace LudumDare56.Slime
     public class SlimeBehavior : MonoBehaviour
     {
         private bool _isfollowing = true; // following Player by default
-      //  [SerializeField] private float _maxDistFromPlayer = 15; //TODO: Discuss if we still want this
+        [SerializeField] private float _maxDistFromPlayer = 15; 
         [SerializeField] private float _growMultiplier = 1.5f;
         [SerializeField] private float _lerpDuration = 2f; // how long it takes to grow into the new size
         [SerializeField] private Animator _handAnimator; // we are setting off triggers based on what we command the slime!
@@ -91,13 +91,12 @@ namespace LudumDare56.Slime
                 }
                 else //else try to get back to the player if we're too far!
                 {
-                    //Commented out because I want to discuss if we think this is necessary to keep! -Geneva
-                    /*
-                    var dist = Vector3.Distance(transform.position, _playerTransform.position);
+
+                    var dist = Vector3.Distance(transform.position, playerPosition);
                     if (dist > _maxDistFromPlayer)
                     {
                         _isfollowing = true;
-                    }*/
+                    }
                 }
             }
 
