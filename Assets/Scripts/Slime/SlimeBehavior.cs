@@ -66,7 +66,7 @@ namespace LudumDare56.Slime
                 //Teleporting stuff
                 if(Vector3.Distance(transform.position, playerPosition) > _maxDistFromPlayer)
                 {
-                    Vector3 newPos = new Vector3(playerPosition.x, playerPosition.y+1, playerPosition.z - 2f);
+                    Vector3 newPos = new Vector3(playerPosition.x, playerPosition.y+1, playerPosition.z - agent.stoppingDistance);
                     transform.position = newPos;
                     agent.enabled = false; // need to temporarily turn this off or the slime for some reason gets stuck in furniture
                 }
