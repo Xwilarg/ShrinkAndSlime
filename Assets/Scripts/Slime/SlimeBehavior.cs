@@ -15,7 +15,7 @@ namespace LudumDare56.Slime
         [SerializeField] private float _growMultiplier = 1.5f;
         [SerializeField] private float _lerpDuration = 2f; // how long it takes to grow into the new size
         [SerializeField] private Animator _handAnimator; // we are setting off triggers based on what we command the slime!
-        [SerializeField] private Animator _anim;
+        private Animator _anim;
 
         private NavMeshAgent agent;
         private Vector3 _targetDestination;
@@ -256,7 +256,11 @@ namespace LudumDare56.Slime
         {
             PlayerController.Instance.GainEnergy(15f);
 
-            if(obj.GameObject.transform.parent != null)
+            if (obj.GameObject.CompareTag("Sheep"))
+            {
+                Destroy(obj.GameObject);
+            }
+            else if(obj.GameObject.transform.parent != null)
             {
                 Destroy(obj.GameObject.transform.parent.gameObject); // The enemy models are inside a parent, so we'll destroy the parent
             }
