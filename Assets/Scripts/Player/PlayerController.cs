@@ -63,8 +63,6 @@ namespace LudumDare56.Player
             _controller = GetComponent<CharacterController>();
             _lr = GetComponentInChildren<LineRenderer>();
 
-            Cursor.lockState = CursorLockMode.Locked;
-
             _attackLayer = LayerMask.GetMask("Map", "Monster", "Sheep");
 
             _cam = Camera.main;
@@ -176,16 +174,18 @@ namespace LudumDare56.Player
 
         public void TakeDamage()
         {
-            if (_healthUI.childCount > 0)
+            if (_canTakeDamage && GameManager.Instance.CanPlay)
             {
-                Destroy(_healthUI.GetChild(_healthUI.childCount - 1).gameObject);
-                StartCoroutine(TakeDamageInvul());
-            }
-            else
-            {
-                GameManager.Instance.CanPlay = false;
-                Cursor.lockState = CursorLockMode.None;
-                _gameOver.SetActive(true);
+                if (_healthUI.childCount > 0)
+                {
+                    Destroy(_healthUI.GetChild(_healthUI.childCount - 1).gameObject);
+                    StartCoroutine(TakeDamageInvul());
+                }
+                else
+                {
+                    GameManager.Instance.CanPlay = false;
+                    _gameOver.SetActive(true);
+                }
             }
         }
 

@@ -12,7 +12,16 @@ namespace LudumDare56.Manager
             Instance = this;
         }
 
-        public bool CanPlay { set; get; }
+        private bool _canPlay;
+        public bool CanPlay
+        {
+            set
+            {
+                _canPlay = value;
+                Cursor.lockState = value ? CursorLockMode.Locked : CursorLockMode.None;
+            }
+            get => _canPlay;
+        }
 
         public void Retry()
         {
