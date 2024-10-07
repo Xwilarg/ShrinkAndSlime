@@ -38,7 +38,7 @@ namespace LudumDare56.Slime
 
         private bool _isCheckingClicks = false;
         private float _dist_multiplier = 0f;
-        private float _max_dist_from_enemy = 4f;
+        private float _max_dist_from_enemy = 3f;
 
         private Vector3 playerPosition => PlayerController.Instance.transform.position;
 
@@ -66,7 +66,7 @@ namespace LudumDare56.Slime
                 //Teleporting stuff
                 if(Vector3.Distance(transform.position, playerPosition) > _maxDistFromPlayer)
                 {
-                    Vector3 newPos = new Vector3(playerPosition.x, playerPosition.y+1, playerPosition.z - agent.stoppingDistance);
+                    Vector3 newPos = new Vector3(playerPosition.x, playerPosition.y+1, playerPosition.z - 2f);
                     transform.position = newPos;
                     agent.enabled = false; // need to temporarily turn this off or the slime for some reason gets stuck in furniture
                 }
@@ -201,7 +201,7 @@ namespace LudumDare56.Slime
                     }
                     else// if not, follow the object!
                     {
-                        if(obj.GetComponent<NavMeshAgent>() != null) // can't follow objects not on the nav mesh
+                        if(agent.enabled) // can't follow objects not on the nav mesh
                         {
                             agent.SetDestination(obj.transform.position);
                         }
@@ -219,7 +219,7 @@ namespace LudumDare56.Slime
                     }
                     else// if not, follow the object!
                     {
-                        if (obj.GetComponent<NavMeshAgent>() != null) // can't follow objects not on the nav mesh
+                        if (agent.enabled) // can't follow objects not on the nav mesh
                         {
                             agent.SetDestination(obj.transform.position);
                         }
@@ -281,7 +281,8 @@ namespace LudumDare56.Slime
             _targetScale = transform.localScale * _growMultiplier;
             _startScale = transform.localScale;
             _dist_multiplier += 1.5f;
-            _max_dist_from_enemy += 1f;
+            _max_dist_from_enemy += 0.75f;
+            _maxDistFromPlayer += 0.25f;
             agent.stoppingDistance += (3+ _dist_multiplier); //increase distance from the player because the bigger the slime the closer they are haha
             _isGrowing = true;
         }
