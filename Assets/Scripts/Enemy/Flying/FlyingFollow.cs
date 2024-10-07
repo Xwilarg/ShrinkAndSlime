@@ -40,7 +40,7 @@ namespace LudumDare56.Enemy.Flying
                         }
                     }
                     var t = _targetNode.transform.position;
-                    t.y = 7.5f * (1f - ScaleProgression + .1f);
+                    t.y += 7.5f * (1f - ScaleProgression + .1f);
                     MoveTowards(t, 5f);
                 }
             }
