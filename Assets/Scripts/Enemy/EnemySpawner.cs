@@ -27,7 +27,7 @@ namespace LudumDare56.Enemy
 
         private void SpawnEnemy(GameObject enemy)
         {
-            Instantiate(enemy,transform.position,transform.rotation);
+            Instantiate(enemy,transform.position,transform.rotation,transform);
         }
 
         private void SpawnRandomEnemy()
@@ -39,6 +39,7 @@ namespace LudumDare56.Enemy
 
         private int GetEnemyCount()
         {
+            var enemies = FindObjectsOfType<AEnemyController>();
             return FindObjectsOfType<AEnemyController>().Length;
         }
 

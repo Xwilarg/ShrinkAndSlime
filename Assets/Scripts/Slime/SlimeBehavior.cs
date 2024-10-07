@@ -267,6 +267,7 @@ namespace LudumDare56.Slime
 
             _targetScale = transform.localScale * _growMultiplier;
             _startScale = transform.localScale;
+            agent.stoppingDistance += 0.5f; //increase distance from the player because the bigger the slime the closer they are haha
             _isGrowing = true;
         }
 

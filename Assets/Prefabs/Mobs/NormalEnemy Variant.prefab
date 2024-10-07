@@ -17,6 +17,10 @@ PrefabInstance:
       value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 6227822200630731761, guid: 385a5fe1d0f191544af9d5a827b798dc, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6227822200630731761, guid: 385a5fe1d0f191544af9d5a827b798dc, type: 3}
       propertyPath: m_Center.y
       value: 0
       objectReference: {fileID: 0}
