@@ -8,6 +8,7 @@ TagManager:
   - Monster
   - Bullet
   - Sheep
+  - Boss
   layers:
   - Default
   - TransparentFX
