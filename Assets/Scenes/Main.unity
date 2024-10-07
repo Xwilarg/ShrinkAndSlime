@@ -136,6 +136,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MissileRat
       objectReference: {fileID: 0}
+    - target: {fileID: 4044034921893177657, guid: b59e0ee1153f9b042a97954390d6b465, type: 3}
+      propertyPath: m_TagString
+      value: Boss
+      objectReference: {fileID: 0}
     - target: {fileID: 6461374377891369344, guid: b59e0ee1153f9b042a97954390d6b465, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.5
