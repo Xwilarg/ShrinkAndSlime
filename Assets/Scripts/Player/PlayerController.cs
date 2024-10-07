@@ -205,7 +205,7 @@ namespace LudumDare56.Player
 
         private void UpdateUI()
         {
-            _energyText.text = $"{_energyAmount:0}%";
+            _energyText.text = $"{_energyAmount:0}";
         }
 
         public void OnMovement(InputAction.CallbackContext value)
