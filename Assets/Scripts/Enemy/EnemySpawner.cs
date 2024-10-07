@@ -1,3 +1,6 @@
+using Ink.Parsed;
+using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 namespace LudumDare56.Enemy
 {
@@ -9,6 +12,8 @@ namespace LudumDare56.Enemy
         [SerializeField] private int _maxEnemyCount = 4; //max amount of enemies out and about at once
         private float spawnTimer;
         private float _timeTilSpawn;
+
+        private List<GameObject> _spawned = new();
 
         // Update is called once per frame
         void Update()
@@ -27,7 +32,8 @@ namespace LudumDare56.Enemy
 
         private void SpawnEnemy(GameObject enemy)
         {
-            Instantiate(enemy,transform.position,transform.rotation,transform);
+            var go = Instantiate(enemy,transform.position,transform.rotation,transform);
+            _spawned.Add(go);
         }
 
         private void SpawnRandomEnemy()
@@ -39,8 +45,8 @@ namespace LudumDare56.Enemy
 
         private int GetEnemyCount()
         {
-            var enemies = FindObjectsOfType<AEnemyController>();
-            return FindObjectsOfType<AEnemyController>().Length;
+            _spawned.RemoveAll(x => x == null);
+            return _spawned.Count;
         }
 
         private void GetNewSpawnTime()

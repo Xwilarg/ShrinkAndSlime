@@ -13,7 +13,7 @@ namespace LudumDare56.Enemy.Ground
 
         private void Update()
         {
-            var didReachDest = !navMeshAgent.pathPending && navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance && (!navMeshAgent.hasPath || navMeshAgent.velocity.sqrMagnitude == 0f);
+            var didReachDest = navMeshAgent.remainingDistance <= (navMeshAgent.stoppingDistance + .2f);
             if (_fightingTarget != null)
             {
                 _animator.SetBool("IsMoving", !didReachDest);

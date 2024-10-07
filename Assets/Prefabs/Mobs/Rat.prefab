@@ -10,9 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 645849138854431320}
   - component: {fileID: 7222354768392186983}
-  - component: {fileID: 5065258694473736352}
-  - component: {fileID: -7517097801276601677}
   - component: {fileID: 8366363333428513563}
+  - component: {fileID: -809633124641338873}
   m_Layer: 8
   m_Name: Rat
   m_TagString: Monster
@@ -46,7 +45,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 4588329288641785192}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 7.32
+  m_Radius: 4.16
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
@@ -56,51 +55,9 @@ NavMeshAgent:
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 4.03
-  m_BaseOffset: -0.11
+  m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!54 &5065258694473736352
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4588329288641785192}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!114 &-7517097801276601677
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4588329288641785192}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67582c9ac47f0114d9c00c31abcea2ee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _modelContainer: {fileID: 5144894715170984031}
-  _model: {fileID: 1243196506454890483}
-  _animator: {fileID: 3985566049083265237}
 --- !u!135 &8366363333428513563
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -120,8 +77,23 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 6.11
-  m_Center: {x: 0, y: 2.43, z: 0}
+  m_Radius: 4.19
+  m_Center: {x: -0.55, y: 2.33, z: -0.82}
+--- !u!114 &-809633124641338873
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4588329288641785192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 614acb8c9e4b82944813f5de8eb4b604, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _modelContainer: {fileID: 5144894715170984031}
+  _model: {fileID: 1243196506454890483}
+  _animator: {fileID: 3985566049083265237}
 --- !u!1 &6320170090511051346
 GameObject:
   m_ObjectHideFlags: 0
@@ -174,7 +146,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 18
+  m_Radius: 50
   m_Center: {x: -1.42, y: 0, z: -2.39}
 --- !u!114 &5075542106364949702
 MonoBehaviour:
@@ -228,6 +200,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5144894715170984031}
     m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 54086ffd5e4a7d74796c0bf74fdcad12, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 54086ffd5e4a7d74796c0bf74fdcad12, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 54086ffd5e4a7d74796c0bf74fdcad12, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 54086ffd5e4a7d74796c0bf74fdcad12, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
