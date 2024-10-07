@@ -5518,7 +5518,6 @@ GameObject:
   - component: {fileID: 1957262264}
   - component: {fileID: 1957262265}
   - component: {fileID: 1957262266}
-  - component: {fileID: 1957262267}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -5578,18 +5577,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 603c97391f46d3c4ea731148eb9b99ed, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1957262267
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1957262262}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b2a50fcfe360bf41b98deb45feb8423, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1962600107
@@ -6235,7 +6222,7 @@ PrefabInstance:
     - target: {fileID: 7140572862497756598, guid: 420b55e772e8c504fbfc3733ffbd3b90, type: 3}
       propertyPath: m_ActionEvents.Array.data[2].m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 1957262267}
+      objectReference: {fileID: 0}
     - target: {fileID: 7140572862497756598, guid: 420b55e772e8c504fbfc3733ffbd3b90, type: 3}
       propertyPath: m_ActionEvents.Array.data[3].m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
