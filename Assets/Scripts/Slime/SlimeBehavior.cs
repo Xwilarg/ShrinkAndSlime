@@ -15,6 +15,7 @@ namespace LudumDare56.Slime
         [SerializeField] private float _growMultiplier = 1.5f;
         [SerializeField] private float _lerpDuration = 2f; // how long it takes to grow into the new size
         [SerializeField] private Animator _handAnimator; // we are setting off triggers based on what we command the slime!
+        [SerializeField] private Animator _anim;
 
         private NavMeshAgent agent;
         private Vector3 _targetDestination;
@@ -43,6 +44,7 @@ namespace LudumDare56.Slime
         void Start()
         {
             agent = GetComponent<NavMeshAgent>();
+            _anim = GetComponentInChildren<Animator>();
             _cam = Camera.main;
             _slimeSize = _renderer.bounds.size;
 
@@ -55,10 +57,10 @@ namespace LudumDare56.Slime
         // Update is called once per frame
         void Update()
         {
+            _anim.SetBool("IsMoving", agent.velocity.magnitude > 0f);
+
             if (_isfollowing)
             {
-             
-
                 if(Vector3.Distance(transform.position, playerPosition) > 50)
                 {
                     transform.position = playerPosition + Vector3.up; // teleport to the player if we're mega far!
