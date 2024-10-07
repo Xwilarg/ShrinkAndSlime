@@ -35,6 +35,9 @@ namespace LudumDare56.Player
         [SerializeField]
         private Transform _healthUI;
 
+        [SerializeField]
+        private GameObject _gameOver;
+
         private CharacterController _controller;
         private Vector2 _mov;
         private bool _isSprinting;
@@ -180,7 +183,8 @@ namespace LudumDare56.Player
             }
             else
             {
-                // TODO: Gameover
+                GameManager.Instance.CanPlay = false;
+                _gameOver.SetActive(true);
             }
         }
 

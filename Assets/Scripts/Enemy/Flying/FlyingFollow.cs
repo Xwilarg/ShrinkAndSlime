@@ -40,7 +40,7 @@ namespace LudumDare56.Enemy.Flying
                         }
                     }
                     var t = _targetNode.transform.position;
-                    t.y = 7.5f * (1f - ScaleProgression + .1f);
+                    t.y += 7.5f * (1f - ScaleProgression + .1f);
                     MoveTowards(t, 5f);
                 }
             }
@@ -62,7 +62,7 @@ namespace LudumDare56.Enemy.Flying
 
                 if (_canShoot)
                 {
-                    var go = Instantiate(_projectilePrefab, _gunEnd);
+                    var go = Instantiate(_projectilePrefab, _gunEnd.position, Quaternion.identity);
                     go.GetComponent<Rigidbody>().linearVelocity = ((PlayerController.Instance.transform.position + Vector3.up) - transform.position).normalized * 20f;
                     StartCoroutine(Reload());
                 }

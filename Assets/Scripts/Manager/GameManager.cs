@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace LudumDare56.Manager
 {
@@ -12,5 +13,10 @@ namespace LudumDare56.Manager
         }
 
         public bool CanPlay { set; get; }
+
+        public void Retry()
+        {
+            SceneManager.LoadScene("Main");
+        }
     }
 }
