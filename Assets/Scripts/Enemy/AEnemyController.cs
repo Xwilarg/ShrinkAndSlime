@@ -1,6 +1,6 @@
-using LudumDare56.Enemy.Ground;
 using LudumDare56.Manager;
 using LudumDare56.Map;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -53,7 +53,7 @@ namespace LudumDare56.Enemy
 
         protected virtual void Start()
         {
-            _targetNode = LevelManager.Instance.FirstNode;
+            _targetNode = GameObject.FindObjectsOfType<Node>().OrderBy(x => Vector3.Distance(transform.position, x.transform.position)).First();
         }
     }
 }
