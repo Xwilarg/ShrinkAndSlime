@@ -78,16 +78,23 @@ namespace LudumDare56.Player
             {
                 _lr.SetPositions(new[] { _gunEnd.transform.position, _rayTarget.Value });
             }
+
+            _energyAmount += Time.deltaTime;
+            if (_energyAmount > 100f)
+            {
+                _energyAmount = 100f;
+            }
+            UpdateUI();
         }
 
         private void FixedUpdate()
         {
             if (_isShooting && GameManager.Instance.CanPlay)
             {
-                if (_energyAmount > 0f)
+                if (Mathf.FloorToInt(_energyAmount) > 0)
                 {
                     _energyAmount -= Time.deltaTime * 10f;
-                    if (_energyAmount < 0f) _energyAmount = 0f;
+                    if (_energyAmount < 1f) _energyAmount = 0f;
                     UpdateUI();
 
                     _lr.enabled = true;
