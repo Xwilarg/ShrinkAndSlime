@@ -168,8 +168,9 @@ namespace LudumDare56.Slime
             _clicked = 0;
             _clickTime = 0;
             _isfollowing = true;
+            agent.stoppingDistance = 5f;
 
-            if(_handAnimator)
+            if (_handAnimator)
             {
                 _handAnimator.SetTrigger("ComeHere");
             }
@@ -180,6 +181,7 @@ namespace LudumDare56.Slime
         {
             _isfollowing = false;
             agent.SetDestination(_targetDestination);
+            agent.stoppingDistance = 0f;
 
             if (_handAnimator)
             {
